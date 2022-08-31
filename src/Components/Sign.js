@@ -1,6 +1,10 @@
 import {Formik, Form} from 'formik'
 export const Sign = () => {
 return (
-    <div>Sign Up</div>
+    <Formik>
+    {formik => {
+        console.log(formik)
+    }}
+    </Formik>
 )
 }
