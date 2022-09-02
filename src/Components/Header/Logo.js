@@ -1,6 +1,6 @@
 const Logo = () => {
 return (
-    <div>Pokedexxx</div>
+    <div>Pokedex</div>
 )
 }
 

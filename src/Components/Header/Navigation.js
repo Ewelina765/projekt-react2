@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-// const S = {
-//     Container: styled.div`
-//     background-color: aliceblue;
-//     `
-// }
+const S = {
+    Container: styled.div`
+    background-color: aliceblue;
+    `
+}
 const Navigation = () => {
     
 return (
