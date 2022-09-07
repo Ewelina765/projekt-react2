@@ -1,107 +1,150 @@
-import { useFormik} from 'formik'
+import { useFormik } from 'formik'
 import styled from 'styled-components'
 import * as yup from 'yup'
-
-
-// const StyledPage = styled(Registration)`
-// background-color: aqua;
-// `
-
-const S = {
-    Container: styled.div`
-    background-color: aliceblue;
-    display: flex;
-    flex-direction: column;
-    width:100%;
-    height: 100%;
-    `,
-    InputStyle: styled.input`
-    border-color: ${({errors}) => (errors.email ? "red" : "black")};
-    `
-    
-}
+import {
+  Container,
+  Card,
+  InputStyle,
+  InputDiv,
+  ButtonStyle,
+  ErrorStyled,
+} from './Header/RegistrationStyled'
 
 const basicSchema = yup.object().shape({
-        firstName: yup
-        .string()
-        .required('First name is required'),
-        lastName: yup
-        .string()
-        .required('Last name is required'),
-        email: yup
-        .string()
-        .required('Email is required')
-        .email('Email is invalid'),
-        password: yup
-        .string()
-        .required('Password is required')
-        .matches(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Number and One Special Case Character"),
-        confirmPassword: yup
-        .string()
-        .oneOf([yup.ref('password'), null], 'Password must match' )
-        .required('You must confirm the password'),
-    });
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
+  email: yup.string().required('Email is required').email('Email is invalid'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .matches(
+      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      'Must Contain 8 Characters, One Uppercase, One Number and One Special Case Character'
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Password must match')
+    .required('You must confirm the password'),
+})
 
+const onSubmit = (values) => {
+        localStorage.setItem('values', JSON.stringify(values))
+}
 
-// const onSubmit = () => {console.log('submitted')};
-
-export const Registration = () => {
-
- const {values, errors, handleChange, handleBlur, handleSubmit } = useFormik({
-     initialValues: {
+export const Registration = ({ className }) => {
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
+    useFormik({
+      initialValues: {
         firstName: '',
         lastName: '',
         email: '',
         password: '',
-        confirmPassword: ''
-    },
-    validationSchema: basicSchema,
-    onSubmit: values => {
-        alert(JSON.stringify(values, null, 2));
+        confirmPassword: '',
       },
-    });
-    console.log(errors)
-return (
-    <S.Container>
-    <h1>Registration</h1>
-    <form onSubmit={handleSubmit}>
-       <div>
-        <label htmlFor="firstName">First Name</label>
-        <S.InputStyle id="firstName" name="firstName" type="text" onChange={handleChange} onBlur={handleBlur} value={values.firstName}/>
-       </div>
-        <div>
-        <label htmlFor="lastName">Last Name</label>
-        <input id="lastName" name="lastName" type="text" onChange={handleChange} onBlur={handleBlur} value={values.lastName}/>
-</div> 
-<div>
-        <label htmlFor="email">Email</label>
-        <input id="email"
-          name="email"
-          type="email"
-          type="text" onChange={handleChange} onBlur={handleBlur} value={values.email}
-        />
-</div>
-<div>
-        <label htmlFor="password">Password</label>
-        <input id="password" name="password" type= 'password' type="text" onChange={handleChange} onBlur={handleBlur} value={values.password}/>
-</div>
-<div>
-        <label htmlFor="confirmpassword">Confirm password</label>
-        <input id="confirmpassword" name="confirmpassword" type="password" type="text" onChange={handleChange} onBlur={handleBlur} value={values.confirmPassword}/>
-  </div>   
-  <div>  
-
-        <button type="submit">Register</button>
-        <button type= "reset">Reset</button>
-</div> 
-        
-
-       
-      
-    
+      validationSchema: basicSchema,
+      onSubmit,
+    })
+  console.log(values, 'values')
+  return (
+    <Container className={className}>
+      <Card>
+        <h1>Registration</h1>
+        <form onSubmit={handleSubmit}>
+          <InputDiv>
+            <label htmlFor='firstName'>First Name</label>
+            <InputStyle
+              borderStyled={errors.name && touched.name ? 'red' : 'black'}
+              id='firstName'
+              name='firstName'
+              type='text'
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.firstName}
+              className={
+                errors.firstName && touched.firstName ? 'input-error' : ''
+              }
+            />
+            {errors.firstName && touched.firstName && (
+              <ErrorStyled>{errors.firstName}</ErrorStyled>
+            )}
+          </InputDiv>
+          <InputDiv>
+            <label htmlFor='lastName'>Last Name</label>
+            <InputStyle
+              borderStyled={
+                errors.lastName && touched.lastName ? 'red' : 'black'
+              }
+              id='lastName'
+              name='lastName'
+              type='text'
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.lastName}
+            />
+            {errors.lastName && touched.lastName && (
+              <ErrorStyled>{errors.lastName}</ErrorStyled>
+            )}
+          </InputDiv>
+          <InputDiv>
+            <label htmlFor='email'>Email</label>
+            <InputStyle
+              borderStyled={errors.email && touched.email ? 'red' : 'black'}
+              id='email'
+              name='email'
+              type='email'
+              type='text'
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
+            />
+            {errors.email && touched.email && (
+              <ErrorStyled>{errors.email}</ErrorStyled>
+            )}
+          </InputDiv>
+          <InputDiv>
+            <label htmlFor='password'>Password</label>
+            <InputStyle
+              borderStyled={
+                errors.password && touched.password ? 'red' : 'black'
+              }
+              id='password'
+              name='password'
+              type='password'
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.password}
+              className={
+                errors.firstName && touched.firstName ? 'input-error' : ''
+              }
+            />
+            {errors.password && touched.password && (
+              <ErrorStyled>{errors.password}</ErrorStyled>
+            )}
+          </InputDiv>
+          <InputDiv>
+            <label htmlFor='confirmPassword'>Confirm password</label>
+            <InputStyle
+              borderStyled={
+                errors.confirmPassword && touched.confirmPassword
+                  ? 'red'
+                  : 'black'
+              }
+              id='confirmPassword'
+              name='confirmPassword'
+              type='password'
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.confirmPassword}
+            />
+            {errors.confirmPassword && touched.confirmPassword && (
+              <ErrorStyled>{errors.confirmPassword}</ErrorStyled>
+            )}
+          </InputDiv>
+          <InputDiv>
+            <ButtonStyle type='submit'>Register</ButtonStyle>
+          </InputDiv>
         </form>
-     </S.Container>
-
-);
-};
+      </Card>
+    </Container>
+  )
+}
