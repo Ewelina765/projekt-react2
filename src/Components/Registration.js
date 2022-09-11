@@ -1,5 +1,6 @@
 import { useFormik } from 'formik'
 import styled from 'styled-components'
+import React, { Component }  from 'react';
 import * as yup from 'yup'
 import {
   Container,
@@ -28,7 +29,7 @@ const basicSchema = yup.object().shape({
 })
 
 const onSubmit = (values) => {
-        localStorage.setItem('values', JSON.stringify(values))
+  localStorage.setItem('values', JSON.stringify(values))
 }
 
 export const Registration = ({ className }) => {
