@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 
 
 
@@ -15,12 +17,27 @@ const S = {
 }
 
 
+
 const Search = () => {
 const [inputText, setInputText] = useState('');
+const [pokemonName, setPokemonName] = useState('')
+
+const searchPokemons = async () => {
+  try {
+const resp = axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+return resp
+}
+catch (err) {console.error(err)}
+}
+
+
+const { data } = useQuery('pokemon', searchPokemons)
+console.log(data, 'dataSearch')
 
 const handleText = (e) => {
-    setInputText(e.target.value)
+    setPokemonName(e.target.value)
 };
+
 
   return (
     <S.Container>

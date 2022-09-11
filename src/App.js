@@ -3,7 +3,7 @@ import Navigation from './Components/Header/Navigation'
 import Search from './Components/Search'
 import Home from './Components/Home'
 import React, { Component }  from 'react';
-import { BrowseRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowseRouter, Routes, Route, Link} from 'react-router-dom'
 import {
   useQuery,
   useMutation,
@@ -30,7 +30,9 @@ const S = {
 
 const App = () => {
   return (
+   
     <div>
+    
     <QueryClientProvider client={queryClient}>
       <Home />
       <S.RegistrationWrapper />
@@ -38,7 +40,9 @@ const App = () => {
         <Sign />
       </SnackbarProvider>
       </QueryClientProvider>
+
     </div>
+   
   )
 }
 
