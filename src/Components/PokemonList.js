@@ -4,6 +4,7 @@ import axios from 'axios'
 import React, { Component, useEffect, useState } from 'react'
 import PokemonCard from './PokemonCard'
 import Search from './Search'
+import TextField from '@mui/material/TextField'
 
 const S = {
   Container: styled.div`
@@ -56,7 +57,7 @@ const PokemonList = () => {
   }, [])
 
   useEffect(() => {
-  const filterPoke = data.data.results.filter((poke) => {
+   const filterPoke = () => data.data.results.filter((poke) => {
     if(poke.name.toLowerCase().includes(inputText.toLoverCase()))
       return <PokemonCard key={poke.name}/>
     })}, [inputText])
@@ -67,7 +68,13 @@ const PokemonList = () => {
       {status === 'error' && <h2>Error!</h2>}
       {status === 'success' && (
         <div>
-        <input onChange={(e) => setInputText(e.target.value)}/>{inputText}
+        <TextField
+        id='outlined-basic'
+        label='Search'
+        variant='outlined'
+        onChange={(e) => setInputText(e.target.value)}
+      />{inputText}
+        
           <S.Card>
             {data &&
               data.data.results.map((pokemon) => (
