@@ -1,22 +1,15 @@
-import Logo from './Components/Header/Logo'
-import Navigation from './Components/Header/Navigation'
-import Search from './Components/Search'
 import Home from './Components/Home'
-import React, { Component }  from 'react';
-import { BrowseRouter, Routes, Route, Link} from 'react-router-dom'
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query'
+import React from 'react'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { Registration } from './Components/Registration'
 import styled from 'styled-components'
 import { Sign } from './Components/Sign'
-import { SnackbarProvider } from 'notistack';
+import PokemonCard from './Components/PokemonCard'
+import { render } from 'react-dom'
+import PokemonDetail from './Components/PokemonDetail'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
 const S = {
   RegistrationWrapper: styled(Registration)`
@@ -30,19 +23,20 @@ const S = {
 
 const App = () => {
   return (
-   
     <div>
-    
-    <QueryClientProvider client={queryClient}>
-      <Home />
-      <S.RegistrationWrapper />
-      <SnackbarProvider>
-        <Sign />
-      </SnackbarProvider>
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
 
+        <Routes>
+        <Route path="/" element={<App />}/>
+        <Route index element={<Home />} />
+          <Route path='/registration' element={<S.RegistrationWrapper />} />
+          <Route path='/sign' element={<Sign />} />
+        
+          <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} /> 
+        </Routes>
+
+      </QueryClientProvider>
     </div>
-   
   )
 }
 
