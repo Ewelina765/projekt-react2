@@ -1,7 +1,9 @@
 import { useFormik } from 'formik'
 import styled from 'styled-components'
-import React, { Component }  from 'react';
+import React, { Component } from 'react'
 import * as yup from 'yup'
+import { useState } from 'react'
+import axios from 'axios'
 import {
   Container,
   Card,
@@ -9,12 +11,15 @@ import {
   InputDiv,
   ButtonStyle,
   ErrorStyled,
-} from './Header/RegistrationStyled'
+} from './RegistrationStyled'
 
 const basicSchema = yup.object().shape({
   firstName: yup.string().required('First name is required'),
   lastName: yup.string().required('Last name is required'),
-  email: yup.string().required('Email is required').email('Email is invalid'),
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Email is invalid'),
   password: yup
     .string()
     .required('Password is required')
@@ -28,24 +33,36 @@ const basicSchema = yup.object().shape({
     .required('You must confirm the password'),
 })
 
-const onSubmit = (values) => {
-  localStorage.setItem('values', JSON.stringify(values))
-}
-
 export const Registration = ({ className }) => {
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
-    useFormik({
-      initialValues: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      },
-      validationSchema: basicSchema,
-      onSubmit,
-    })
-  console.log(values, 'values')
+  const [newUser, setNewUser] = useState()
+  const [succes, setSucces] = useState(false)
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = useFormik({
+    initialValues: {
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: basicSchema,
+    onSubmit: (values) => {
+      const response = axios
+        .post('http://localhost:8002/users', values)
+        .catch((err) => console.log(err))
+      if (response) {
+        setSucces(true)
+      }
+    },
+  })
+
   return (
     <Container className={className}>
       <Card>
@@ -144,8 +161,11 @@ export const Registration = ({ className }) => {
           <InputDiv>
             <ButtonStyle type='submit'>Register</ButtonStyle>
           </InputDiv>
+          {succes ? <p>You are registered successfully!</p> : ''}
         </form>
       </Card>
     </Container>
   )
 }
+
+export default Registration

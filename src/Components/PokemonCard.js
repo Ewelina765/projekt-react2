@@ -6,24 +6,13 @@ import { height } from '@mui/system'
 import Search from './Search'
 import { Link } from 'react-router-dom'
 import PokemonDetail from './PokemonDetail'
+import Card from '../UI/Card'
+import useFetch from '../hooks/useFetch'
+
 const S = {
   Container: styled.div`
     display: flex;
     flex-direction: row;
-  `,
-  Card: styled.div`
-    height: 400px;
-    width: 350px;
-    background-color: lightgray;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: 1s;
-    &:hover {
-      transform: scale(1.1);
-    }
   `,
   Img: styled.img`
     height: 150px;
@@ -48,61 +37,52 @@ const S = {
     align-items: center;
     justify-content: center;
   `,
+  Li: styled.li`
+    display: inline-block;
+  `,
 }
 
 const PokemonCard = ({ name, url }) => {
-  const [pokemon, setPokemon] = useState(null)
+  const { data } = useFetch(url)
 
-  useEffect(() => {
-    const getPokemon = async () => {
-      try {
-        const result = await axios.get(url)
-        setPokemon(result.data)
-
-        return result
-      } catch (err) {
-        console.error(err)
-      }
-    }
-    getPokemon()
-  }, [])
-
-  if (!pokemon) return null
+  if (!data) return null
   return (
-    <div>
-      <S.Container>
-        <Link to={`/pokemons/${name}`}>
-          <S.Card>
-            <div>
-              <S.Img src={pokemon.sprites.front_default} />
-            </div>
-            <h1>{name}</h1>
-            <S.Features>
-              <S.Two>
-                <S.One>
-                  <div>{pokemon.height}</div>
-                  <div>Height</div>
-                </S.One>
-                <S.One>
-                  <div>{pokemon.base_experience}</div>
-                  <div>Base experience</div>
-                </S.One>
-              </S.Two>
-              <S.Two>
-                <S.One>
-                  <div>{pokemon.weight}</div>
-                  <div>Weight</div>
-                </S.One>
-                <S.One>
-                  <div>{pokemon.abilities[0].ability.name}</div>
-                  <div>Ability</div>
-                </S.One>
-              </S.Two>
-            </S.Features>
-          </S.Card>
-        </Link>
-      </S.Container>
-    </div>
+    <S.Li>
+      <div>
+        <S.Container>
+          <Link to={`/pokemons/${name}`}>
+            <Card>
+              <div>
+                <S.Img src={data.sprites.front_default} />
+              </div>
+              <h1>{name}</h1>
+              <S.Features>
+                <S.Two>
+                  <S.One>
+                    <div>{data.height}</div>
+                    <div>Height</div>
+                  </S.One>
+                  <S.One>
+                    <div>{data.base_experience}</div>
+                    <div>Base experience</div>
+                  </S.One>
+                </S.Two>
+                <S.Two>
+                  <S.One>
+                    <div>{data.weight}</div>
+                    <div>Weight</div>
+                  </S.One>
+                  <S.One>
+                    <div>{data.abilities[0].ability.name}</div>
+                    <div>Ability</div>
+                  </S.One>
+                </S.Two>
+              </S.Features>
+            </Card>
+          </Link>
+        </S.Container>
+      </div>
+    </S.Li>
   )
 }
 

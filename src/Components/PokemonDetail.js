@@ -4,12 +4,11 @@ import PokemonList from './PokemonList'
 
 const PokemonDetail = ({ pokemons }) => {
   const { pokemonId } = useParams()
-console.log('pokemonIs', pokemonId)
-console.log('pokemons',pokemons)
+  console.log('pokemonIs', pokemonId)
+  console.log('pokemons', pokemons)
   return (
     <div>
       <p>Hello </p>
-     
     </div>
   )
 }

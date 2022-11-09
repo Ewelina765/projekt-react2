@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import React, { Component }  from 'react';
+import React, { Component , useState}  from 'react';
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { useSnackbar, SnackbarProvider } from 'notistack'
@@ -10,18 +10,24 @@ import {
   SignContainer,
   ButtonStyle,
   ErrorStyled,
-} from './Header/RegistrationStyled'
+} from './RegistrationStyled'
+import { useNavigate } from "react-router-dom";
 
 const basicSchema = yup.object().shape({
   email: yup.string().required('Email is required').email('Email is invalid'),
   password: yup.string().required('Password is required'),
 })
 
-const onSubmit = () => {
-  console.log('submitted')
-}
 
-export const Sign = () => {
+
+
+export const Sign = ({users}) => {
+
+const [succes, setSucces] = useState(false)
+const [clicked, setClicked] = useState(false)
+
+const navigate = useNavigate();
+
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
@@ -29,21 +35,30 @@ export const Sign = () => {
         password: '',
       },
       validationSchema: basicSchema,
-      onSubmit,
+      onSubmit: () => {checkUser()}
+      
     })
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
-  const handleSubmit2 = () => {
-    const items = JSON.parse(localStorage.getItem('items'))
-    if (values.email == !items.email || values.password == !items.password) {
-      enqueueSnackbar('Wrong email or password')
+
+  const checkUser = () => {
+    const usercheck = users.map(user => ((user.email === values.email) && (user.password===values.password)));
+    if(usercheck) {
+    setSucces(true)
+    navigate('/edition')
     }
-    console.log(items, 'items')
+  } 
+  
+  const clickedButton = () => {
+    console.log('clicked')
+setClicked(true)
   }
+
+  
+ 
   return (
     <SignContainer>
       <SignCard>
         <h1>Sign Up</h1>
-        <form onSubmit={handleSubmit} onSubmit={handleSubmit2}>
+        <form onSubmit={handleSubmit}>
           <InputDiv>
             <label htmlFor='email'>Email</label>
             <InputStyle
@@ -82,8 +97,9 @@ export const Sign = () => {
           </InputDiv>
 
           <InputDiv>
-            <ButtonStyle type='submit'>Sign</ButtonStyle>
+            <ButtonStyle onClick={clickedButton} type='submit'>Sign</ButtonStyle>
           </InputDiv>
+          {succes && clicked ? <p>Login successful</p> : <p>"Wrong email or username"</p>}
         </form>
       </SignCard>
     </SignContainer>

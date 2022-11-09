@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstname": "Ewelina",
+      "lastname": "Kuźniewska",
+      "email": "ewelina.kuzniewska@wp.pl",
+      "password": "Ewelina123!",
+      "confirmPassword": "Ewelina123!"
+    },
+    {
+      "id": 2,
+      "firstname": "Ewa",
+      "lastname": "Kowalska",
+      "email": "ewa.kowalska@wp.pl",
+      "password": "EwaKowalska123^^",
+      "confirmPassword": "EwaKowalska123^^"
+    },
+    {
+      "firstName": "Marek",
+      "lastName": "Kowalski",
+      "email": "maro.kowal@wp.pl",
+      "password": "Marokowal123#",
+      "confirmPassword": "Marokowal123#",
+      "id": 3
+    }
+  ]
+}
