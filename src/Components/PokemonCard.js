@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import PokemonDetail from './PokemonDetail'
 import Card from '../UI/Card'
 import useFetch from '../hooks/useFetch'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 
 const S = {
   Container: styled.div`
@@ -40,14 +41,34 @@ const S = {
   Li: styled.li`
     display: inline-block;
   `,
+  Favourites: styled(FavoriteIcon)`
+    color: ${({ active }) => (active ? 'red' : 'grey')};
+  `,
 }
 
-const PokemonCard = ({ name, url }) => {
+const PokemonCard = ({ name, url, pokemons }) => {
+  const [favourites, setFavourites] = useState([])
+  const [clickedIcon, setClickedIcon] = useState(false)
+
+  const addToFavourites = (name) => {
+    setClickedIcon((clickedIcon) => !clickedIcon)
+    if (
+      favourites.filter((alreadyFavourite) => alreadyFavourite.name ==!name)
+    ) {
+      setFavourites([...favourites, name])
+      console.log('favs', favourites)
+    }
+  }
+
   const { data } = useFetch(url)
 
   if (!data) return null
   return (
     <S.Li>
+      <S.Favourites
+        active={clickedIcon}
+        onClick={() => addToFavourites(name)}
+      />
       <div>
         <S.Container>
           <Link to={`/pokemons/${name}`}>

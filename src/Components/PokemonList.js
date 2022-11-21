@@ -48,24 +48,13 @@ const PokemonList = () => {
   }
 
   useEffect(() => {
-    const filterPoke = () => data?.results?.filter((poke) => {
-      return poke.name.toLowerCase().includes(inputText.toLowerCase())
-      
-    })
-   
-     setPokemons(filterPoke)
-    
+    if (data) {
+      const filters = data.results.filter((item) =>
+        item.name.includes(inputText.toLowerCase())
+      )
+      setPokemons(filters)
+    }
   }, [inputText.length])
-
-  // <S.Input>
-  //         <TextField
-  //           id='outlined-basic'
-  //           label='Search'
-  //           variant='outlined'
-  //           value={inputText}
-  //           onChange={(e) => setInputText(e.target.value)}
-  //         />
-  //       </S.Input>
 
   return (
     <div>
@@ -85,13 +74,13 @@ const PokemonList = () => {
                   url={pokemon.url}
                   pokemons={pokemons}
                 >
-                  <PokemonDetail pokemons={pokemons} />
                 </PokemonCard>
               ))}
-           </ul>
+            </ul>
           </S.Card>
-       </div>)}
-       {data && inputText === '' && (
+        </div>
+      )}
+      {data && inputText === '' && (
         <div>
           <S.Card>
             <ul>
@@ -105,11 +94,11 @@ const PokemonList = () => {
                   <PokemonDetail pokemons={pokemons} />
                 </PokemonCard>
               ))}
-           </ul>
+            </ul>
           </S.Card>
-        </div>)}
-      )
-      <button onClick={prevPage}>Previous</button>
+        </div>
+      )}
+      )<button onClick={prevPage}>Previous</button>
       <button onClick={nextPage}>Next</button>
     </div>
   )
