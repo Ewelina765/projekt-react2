@@ -110,7 +110,6 @@ export const Registration = ({ className }) => {
               id='email'
               name='email'
               type='email'
-              type='text'
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}

@@ -5,12 +5,14 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { Registration } from './Components/Registration'
 import styled from 'styled-components'
 import { Sign } from './Components/Sign'
+import PokemonList from './Components/PokemonList'
 import PokemonCard from './Components/PokemonCard'
 import { render } from 'react-dom'
 import PokemonDetail from './Components/PokemonDetail'
 import axios from 'axios'
 import Navigation from './Components/Header/Navigation'
 import Error from './Components/Error'
+import Search from './Components/Search'
 const queryClient = new QueryClient()
 
 const S = {
@@ -38,16 +40,20 @@ const App = () => {
 
   return (
     <div>
-      <QueryClientProvider client={queryClient}>
+      <nav>
+        <Navigation/>
+      </nav>
+      <main>
+       
         <Routes>
           <Route path='/' element={<App />} />
-          <Route index element={<Home />} />
+          <Route index element={<Home/>} />
           <Route path='/registration' element={<S.RegistrationWrapper />} />
           <Route path='/sign' element={<Sign users={users} />} />
           <Route path='*' element={<Error />} />
           <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} />
         </Routes>
-      </QueryClientProvider>
+     </main>
     </div>
   )
 }

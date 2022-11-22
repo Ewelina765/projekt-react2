@@ -30,9 +30,7 @@ const S = {
   `,
 }
 
-const PokemonList = () => {
-  const [inputText, setInputText] = useState('')
-  const [pokemons, setPokemons] = useState([])
+const PokemonList = ({ pokemons, inputText, setInputText }) => {
   const [url, setUrl] = useState(
     'https://pokeapi.co/api/v2/pokemon?limit=15&offset=0'
   )
@@ -47,20 +45,8 @@ const PokemonList = () => {
     setUrl(prevURL)
   }
 
-  useEffect(() => {
-    if (data) {
-      const filters = data.results.filter((item) =>
-        item.name.includes(inputText.toLowerCase())
-      )
-      setPokemons(filters)
-    }
-  }, [inputText.length])
-
   return (
     <div>
-      <div>
-        <Search data={data} inputText={inputText} setInputText={setInputText} />
-      </div>
       {isLoading && <h2>Loading...</h2>}
       {error && <h2>Error!</h2>}
       {data && inputText.length > 0 && (
@@ -73,8 +59,7 @@ const PokemonList = () => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
-                >
-                </PokemonCard>
+                ></PokemonCard>
               ))}
             </ul>
           </S.Card>
@@ -90,9 +75,7 @@ const PokemonList = () => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
-                >
-                  <PokemonDetail pokemons={pokemons} />
-                </PokemonCard>
+                ></PokemonCard>
               ))}
             </ul>
           </S.Card>

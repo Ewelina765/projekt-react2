@@ -9,7 +9,7 @@ import PokemonDetail from './PokemonDetail'
 import Card from '../UI/Card'
 import useFetch from '../hooks/useFetch'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-
+import { BrowserRouter, Routes, Route, } from 'react-router-dom'
 const S = {
   Container: styled.div`
     display: flex;
@@ -76,7 +76,7 @@ const PokemonCard = ({ name, url, pokemons }) => {
               <div>
                 <S.Img src={data.sprites.front_default} />
               </div>
-              <h1>{name}</h1>
+              <h1>{name.charAt(0).toLocaleUpperCase() + name.slice(1)}</h1>
               <S.Features>
                 <S.Two>
                   <S.One>
@@ -102,6 +102,7 @@ const PokemonCard = ({ name, url, pokemons }) => {
             </Card>
           </Link>
         </S.Container>
+     
       </div>
     </S.Li>
   )

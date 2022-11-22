@@ -1,8 +1,17 @@
-import React from 'react';
+import React from 'react'
+import Pokedex from './logo.png'
+import { useNavigate } from 'react-router-dom'
+
 const Logo = () => {
-return (
-    <div>Pokedex</div>
-)
+  let navigate = useNavigate()
+  const goToHome = () => {
+    navigate('/')
+  }
+  return (
+    <div>
+      <img src={Pokedex} width='230px' height='150px' onClick={goToHome} />
+    </div>
+  )
 }
 
 export default Logo
