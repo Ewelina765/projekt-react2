@@ -9,7 +9,7 @@ import PokemonDetail from './PokemonDetail'
 import Card from '../UI/Card'
 import useFetch from '../hooks/useFetch'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import { BrowserRouter, Routes, Route, } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 const S = {
   Container: styled.div`
     display: flex;
@@ -40,6 +40,7 @@ const S = {
   `,
   Li: styled.li`
     display: inline-block;
+    padding: 10px;
   `,
   Favourites: styled(FavoriteIcon)`
     color: ${({ active }) => (active ? 'red' : 'grey')};
@@ -50,31 +51,33 @@ const PokemonCard = ({ name, url, pokemons }) => {
   const [favourites, setFavourites] = useState([])
   const [clickedIcon, setClickedIcon] = useState(false)
 
-  const addToFavourites = (name) => {
+  const addToFavourites = () => {
     setClickedIcon((clickedIcon) => !clickedIcon)
-    if (
-      favourites.filter((alreadyFavourite) => alreadyFavourite.name ==!name)
-    ) {
-      setFavourites([...favourites, name])
+    const filterFavourites = favourites.filter((item) =>
+      item.name.includes(name)
+    )
+    if (clickedIcon === true && favourites.length > 0 && !filterFavourites) {
+      setFavourites((favourites) => [...favourites, filterFavourites])
       console.log('favs', favourites)
     }
   }
+
+  // const removeFavourite = () => {
+  //   setClickedIcon(false)
+  // }
 
   const { data } = useFetch(url)
 
   if (!data) return null
   return (
     <S.Li>
-      <S.Favourites
-        active={clickedIcon}
-        onClick={() => addToFavourites(name)}
-      />
+      <S.Favourites active={clickedIcon} onClick={addToFavourites} />
       <div>
         <S.Container>
           <Link to={`/pokemons/${name}`}>
             <Card>
               <div>
-                <S.Img src={data.sprites.front_default} />
+                <S.Img src={data.sprites.other.dream_world.front_default} />
               </div>
               <h1>{name.charAt(0).toLocaleUpperCase() + name.slice(1)}</h1>
               <S.Features>
@@ -102,7 +105,6 @@ const PokemonCard = ({ name, url, pokemons }) => {
             </Card>
           </Link>
         </S.Container>
-     
       </div>
     </S.Li>
   )

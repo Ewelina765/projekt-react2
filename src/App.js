@@ -13,6 +13,7 @@ import axios from 'axios'
 import Navigation from './Components/Header/Navigation'
 import Error from './Components/Error'
 import Search from './Components/Search'
+import BackGroundFoto from './UI/Background'
 const queryClient = new QueryClient()
 
 const S = {
@@ -23,6 +24,13 @@ const S = {
       width: 100vw;
     }
   `,
+  Main: styled.main`
+  background-image: url(BackGroundFoto)
+ width: 100vw;
+ height: 100vw;
+  
+  `,
+ 
 }
 
 const App = () => {
@@ -43,8 +51,7 @@ const App = () => {
       <nav>
         <Navigation/>
       </nav>
-      <main>
-       
+      <S.Main>
         <Routes>
           <Route path='/' element={<App />} />
           <Route index element={<Home/>} />
@@ -53,7 +60,7 @@ const App = () => {
           <Route path='*' element={<Error />} />
           <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} />
         </Routes>
-     </main>
+     </S.Main>
     </div>
   )
 }

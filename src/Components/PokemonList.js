@@ -1,21 +1,16 @@
 import styled from 'styled-components'
-import { useQuery } from 'react-query'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PokemonCard from './PokemonCard'
-import { Link } from 'react-router-dom'
-import TextField from '@mui/material/TextField'
-import PokemonDetail from './PokemonDetail'
 import useFetch from '../hooks/useFetch'
-import Search from './Search'
 
 const S = {
   Container: styled.div`
-    background-color: green;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+    align-items: center; 
   `,
+
   Card: styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -28,15 +23,17 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
+  ButtonDiv: styled.div`
+  padding: 40px;
+  `
 }
 
-const PokemonList = ({ pokemons, inputText, setInputText }) => {
+const PokemonList = ({ pokemons, inputText }) => {
   const [url, setUrl] = useState(
     'https://pokeapi.co/api/v2/pokemon?limit=15&offset=0'
   )
 
   const { data, isLoading, error, nextURL, prevURL } = useFetch(url)
-  console.log('data', data)
 
   const nextPage = () => {
     setUrl(nextURL)
@@ -45,8 +42,24 @@ const PokemonList = ({ pokemons, inputText, setInputText }) => {
     setUrl(prevURL)
   }
 
+  // const [favourites, setFavourites] = useState([])
+  // const [clickedIcon, setClickedIcon] = useState(false)
+
+  // const addToFavourites = (name) => {
+  //   setClickedIcon((clickedIcon) => !clickedIcon)
+  //   if (clickedIcon==true) {
+  //     favourites.filter((alreadyFavourite) => alreadyFavourite.name == name)
+  //     setFavourites((favourites) => [...favourites, name])
+  //     console.log('favs', favourites)
+  //   }
+  // }
+
+  // const removeFavourite = () => {
+  //   setClickedIcon(false)
+  // }
+
   return (
-    <div>
+    <S.Container>
       {isLoading && <h2>Loading...</h2>}
       {error && <h2>Error!</h2>}
       {data && inputText.length > 0 && (
@@ -59,6 +72,8 @@ const PokemonList = ({ pokemons, inputText, setInputText }) => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
+                  // addToFavourites={addToFavourites}
+                  // clickedIcon={clickedIcon}
                 ></PokemonCard>
               ))}
             </ul>
@@ -81,9 +96,11 @@ const PokemonList = ({ pokemons, inputText, setInputText }) => {
           </S.Card>
         </div>
       )}
-      )<button onClick={prevPage}>Previous</button>
-      <button onClick={nextPage}>Next</button>
-    </div>
+      <S.ButtonDiv>
+        <button onClick={prevPage}>Previous</button>
+        <button onClick={nextPage}>Next</button>
+      </S.ButtonDiv>
+    </S.Container>
   )
 }
 

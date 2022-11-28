@@ -9,7 +9,7 @@ const Logo = () => {
   }
   return (
     <div>
-      <img src={Pokedex} width='230px' height='150px' onClick={goToHome} />
+      <img src={Pokedex} width='230px' height='140px' onClick={goToHome} />
     </div>
   )
 }
