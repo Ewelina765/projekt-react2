@@ -51,22 +51,40 @@ const PokemonCard = ({ name, url, pokemons }) => {
   const [favourites, setFavourites] = useState([])
   const [clickedIcon, setClickedIcon] = useState(false)
 
-  const addToFavourites = () => {
-    setClickedIcon((clickedIcon) => !clickedIcon)
-    const filterFavourites = favourites.filter((item) =>
-      item.name.includes(name)
-    )
-    if (clickedIcon === true && favourites.length > 0 && !filterFavourites) {
-      setFavourites((favourites) => [...favourites, filterFavourites])
-      console.log('favs', favourites)
+  const { data } = useFetch(url)
+
+  useEffect(() => {
+    const addToFavourites = () => {
+      setClickedIcon((clickedIcon) => !clickedIcon)
+      if (data) {
+        const filterFavourites = data.results.filter(
+          (item) => item.name !== favourites.name
+        )
+        if (clickedIcon === true && filterFavourites) {
+          setFavourites((favourites) => [...favourites, filterFavourites])
+          console.log('favs', favourites)
+        }
+      }
+      addToFavourites()
     }
-  }
+  }, [favourites.length])
+
+  // const addToFavourites = () => {
+  //   setClickedIcon((clickedIcon) => !clickedIcon)
+  //   if (data) {
+  //     const filterPoke = data.results.filter(
+  //       (item) => item.name !== favourites.name
+  //     )
+  //     if (clickedIcon === true && filterPoke) {
+  //       setFavourites((favourites) => [...favourites, filterPoke])
+  //       console.log('favs', favourites)
+  //     }
+  //   }
+  // }
 
   // const removeFavourite = () => {
   //   setClickedIcon(false)
   // }
-
-  const { data } = useFetch(url)
 
   if (!data) return null
   return (
