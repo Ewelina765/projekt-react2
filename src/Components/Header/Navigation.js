@@ -4,7 +4,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 const S = {
   Container: styled.div`
-    background-color: red;
+    background-color: #fefbd8;
     display: flex;
     align-items: center;
     justify-content: space-between;

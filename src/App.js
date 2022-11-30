@@ -28,7 +28,7 @@ const S = {
   background-image: url(BackGroundFoto)
  width: 100vw;
  height: 100vw;
-  
+ background-color: #d5f4e6;
   `,
  
 }

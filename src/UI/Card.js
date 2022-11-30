@@ -4,7 +4,8 @@ import React from 'react'
 const StyledCard = styled.div`
   height: 400px;
   width: 350px;
-  background-color: lightgray;
+  background-color: #f0f0f0;
+  border-radius: 15px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;

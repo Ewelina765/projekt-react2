@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 
 const Input = styled.div`
-  background-color: green;
+  background-color: #80ced6;
   height: 150px;
   display: flex;
   justify-content: center;

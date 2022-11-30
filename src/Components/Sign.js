@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import React, { Component , useState}  from 'react';
+import React, { Component, useState } from 'react'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { useSnackbar, SnackbarProvider } from 'notistack'
@@ -11,49 +11,55 @@ import {
   ButtonStyle,
   ErrorStyled,
 } from './RegistrationStyled'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 const basicSchema = yup.object().shape({
-  email: yup.string().required('Email is required').email('Email is invalid'),
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Email is invalid'),
   password: yup.string().required('Password is required'),
 })
 
+export const Sign = ({ users }) => {
+  const [succes, setSucces] = useState(false)
+  const [clicked, setClicked] = useState(false)
 
+  const navigate = useNavigate()
 
-
-export const Sign = ({users}) => {
-
-const [succes, setSucces] = useState(false)
-const [clicked, setClicked] = useState(false)
-
-const navigate = useNavigate();
-
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
-    useFormik({
-      initialValues: {
-        email: '',
-        password: '',
-      },
-      validationSchema: basicSchema,
-      onSubmit: () => {checkUser()}
-      
-    })
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: basicSchema,
+    onSubmit: () => {
+      checkUser()
+    },
+  })
 
   const checkUser = () => {
-    const usercheck = users.map(user => ((user.email === values.email) && (user.password===values.password)));
-    if(usercheck) {
-    setSucces(true)
-    navigate('/edition')
+    const usercheck = users.map(
+      (user) => user.email === values.email && user.password === values.password
+    )
+    if (usercheck) {
+      setSucces(true)
+      navigate('/edition')
     }
-  } 
-  
-  const clickedButton = () => {
-    console.log('clicked')
-setClicked(true)
   }
 
-  
- 
+  const clickedButton = () => {
+    console.log('clicked')
+    setClicked(true)
+  }
+
   return (
     <SignContainer>
       <SignCard>
@@ -97,9 +103,15 @@ setClicked(true)
           </InputDiv>
 
           <InputDiv>
-            <ButtonStyle onClick={clickedButton} type='submit'>Sign</ButtonStyle>
+            <ButtonStyle onClick={clickedButton} type='submit'>
+              Sign
+            </ButtonStyle>
           </InputDiv>
-          {succes && clicked ? <p>Login successful</p> : <p>"Wrong email or username"</p>}
+          {succes && clicked ? (
+            <p>Login successful</p>
+          ) : (
+            <p>"Wrong email or username"</p>
+          )}
         </form>
       </SignCard>
     </SignContainer>

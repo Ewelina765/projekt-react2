@@ -47,35 +47,50 @@ const S = {
   `,
 }
 
-const PokemonCard = ({ name, url, pokemons }) => {
+const PokemonCard = ({ name, url }) => {
   const [favourites, setFavourites] = useState([])
   const [clickedIcon, setClickedIcon] = useState(false)
+  const [inFav, setInFav] = useState(false)
 
   const { data } = useFetch(url)
 
+  const { data2 } = useFetch(
+    'https://pokeapi.co/api/v2/pokemon?limit=15&offset=0'
+  )
+
   useEffect(() => {
-    const addToFavourites = () => {
+    const addToFavourites = (data2) => {
       setClickedIcon((clickedIcon) => !clickedIcon)
-      if (data) {
-        const filterFavourites = data.results.filter(
+      if (data2) {
+        const filterPoke = data2.results.filter(
           (item) => item.name !== favourites.name
         )
-        if (clickedIcon === true && filterFavourites) {
-          setFavourites((favourites) => [...favourites, filterFavourites])
+        setInFav(true)
+        if (clickedIcon && inFav) {
+          setFavourites((favourites) => [...favourites, filterPoke])
           console.log('favs', favourites)
+        }
+        if (clickedIcon === false) {
+          const index = favourites.indexOf(filterPoke)
+          if (index > -1) {
+            favourites.splice(index, 1)
+          }
         }
       }
       addToFavourites()
     }
-  }, [favourites.length])
+  }, [])
 
   // const addToFavourites = () => {
   //   setClickedIcon((clickedIcon) => !clickedIcon)
-  //   if (data) {
-  //     const filterPoke = data.results.filter(
+
+  //   if (data2) {
+  //     const filterPoke = data2.results.filter(
   //       (item) => item.name !== favourites.name
   //     )
-  //     if (clickedIcon === true && filterPoke) {
+  //     setInFav(true)
+
+  //     if (clickedIcon && inFav) {
   //       setFavourites((favourites) => [...favourites, filterPoke])
   //       console.log('favs', favourites)
   //     }

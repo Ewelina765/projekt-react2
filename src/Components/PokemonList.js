@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PokemonCard from './PokemonCard'
 import useFetch from '../hooks/useFetch'
 
@@ -15,6 +15,7 @@ const S = {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    
   `,
   Input: styled.div`
     background-color: green;
@@ -42,21 +43,6 @@ const PokemonList = ({ pokemons, inputText }) => {
     setUrl(prevURL)
   }
 
-  // const [favourites, setFavourites] = useState([])
-  // const [clickedIcon, setClickedIcon] = useState(false)
-
-  // const addToFavourites = (name) => {
-  //   setClickedIcon((clickedIcon) => !clickedIcon)
-  //   if (clickedIcon==true) {
-  //     favourites.filter((alreadyFavourite) => alreadyFavourite.name == name)
-  //     setFavourites((favourites) => [...favourites, name])
-  //     console.log('favs', favourites)
-  //   }
-  // }
-
-  // const removeFavourite = () => {
-  //   setClickedIcon(false)
-  // }
 
   return (
     <S.Container>
@@ -72,8 +58,7 @@ const PokemonList = ({ pokemons, inputText }) => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
-                  // addToFavourites={addToFavourites}
-                  // clickedIcon={clickedIcon}
+                 
                 ></PokemonCard>
               ))}
             </ul>
@@ -90,6 +75,7 @@ const PokemonList = ({ pokemons, inputText }) => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
+                  
                 ></PokemonCard>
               ))}
             </ul>
