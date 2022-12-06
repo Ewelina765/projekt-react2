@@ -63,37 +63,49 @@ const S = {
   `,
 }
 
-const PokemonCard = ({ name, url, id , some}) => {
+const PokemonCard = ({ name, url, id, index }) => {
   const [favourites, setFavourites] = useState([])
   const [clickedIcon, setClickedIcon] = useState(false)
   const [isInFav, setIsInFav] = useState(false)
 
   const { data } = useFetch(url)
-  console.log('idcard', some, name)
-  console.log(data)
-
 
   const addToFavourites = () => {
     setClickedIcon((clickedIcon) => !clickedIcon)
-    if (data) {
-      const filterPoke = data.results.map(
-        (item) => item.id === some
-      )
-      setIsInFav(true)
-
-      if (clickedIcon && !isInFav) {
-        setFavourites((favourites) => [...favourites, filterPoke])
-        console.log('favs', favourites)
-      }
-      if(!clickedIcon) {
-        setFavourites(favourites.filter(item => item.id !== some))
-      }
+    if (clickedIcon && favourites.length === 0) {
+      setFavourites(favourites.push(id))
+      console.log('fav', favourites)
+    }
+    if (clickedIcon && favourites.length > 0) {
+      const searchPoke = favourites.find((item) => item.id !== id)
+      setFavourites((prev) => [...prev, id])
+      console.log('fav', favourites)
+    }
+    if (!clickedIcon) {
+      const filter = favourites.filter((item) => item.id !== id)
     }
   }
-  useEffect(()=>{
-    addToFavourites()
-  },[favourites.length])
 
+  // const addToFavourites = (id) => {
+  //   setClickedIcon((clickedIcon) => !clickedIcon)
+  //   if (data) {
+  //     const filterPoke = data.results.map(
+  //       (item) => item.id === id
+  //     )
+  //     setIsInFav(true)
+
+  //     if (clickedIcon && !isInFav) {
+  //       setFavourites((favourites) => [...favourites, name])
+  //       console.log('favs', favourites)
+  //     }
+  //     if(!clickedIcon) {
+  //       setFavourites(favourites.filter(item => item.id !== id))
+  //     }
+  //   }
+  // }
+  useEffect(() => {
+    addToFavourites()
+  }, [favourites.length])
 
   // const addToFavourites = (e) => {
   //   setClickedIcon((clickedIcon) => !clickedIcon)
@@ -117,10 +129,7 @@ const PokemonCard = ({ name, url, id , some}) => {
       <S.Container>
         <Card>
           <S.IconDiv>
-            <S.Favourites
-              active={clickedIcon}
-              onClick={addToFavourites}
-            />
+            <S.Favourites active={clickedIcon} onClick={addToFavourites} />
             <S.Sword />
           </S.IconDiv>
           <S.StyleLink to={`/pokemons/${name}`}>

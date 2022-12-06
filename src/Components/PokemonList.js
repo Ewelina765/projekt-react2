@@ -50,9 +50,9 @@ const PokemonList = ({ pokemons, inputText }) => {
         <div>
           <S.Card>
             <ul>
-              {pokemons.map((pokemon, index) => (
+              {pokemons.map((pokemon, ind) => (
                 <PokemonCard
-                some={index=1}
+                  index={ind + 1}
                   id={pokemon.id}
                   key={pokemon.id}
                   name={pokemon.name}
@@ -68,9 +68,9 @@ const PokemonList = ({ pokemons, inputText }) => {
         <div>
           <S.Card>
             <ul>
-              {data.results.map((pokemon, index) => (
+              {data.results.map((pokemon, ind) => (
                 <PokemonCard
-                some={index+1}
+                  index={ind + 1}
                   id={pokemon.id}
                   key={pokemon.id}
                   name={pokemon.name}
