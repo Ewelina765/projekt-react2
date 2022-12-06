@@ -1,8 +1,8 @@
 import { useFormik } from 'formik'
 import React, { Component, useState } from 'react'
-import styled from 'styled-components'
 import * as yup from 'yup'
-import { useSnackbar, SnackbarProvider } from 'notistack'
+import { LogInContext } from '../Contexts/LogContext'
+import { useContext } from 'react'
 import {
   SignCard,
   InputStyle,
@@ -26,6 +26,7 @@ export const Sign = ({ users }) => {
   const [clicked, setClicked] = useState(false)
 
   const navigate = useNavigate()
+  const { setIsLogIn } = useContext(LogInContext)
 
   const {
     values,
@@ -46,17 +47,19 @@ export const Sign = ({ users }) => {
   })
 
   const checkUser = () => {
-    const usercheck = users.map(
+    console.log('userssing', users)
+    console.log('values', values)
+    const userCheck = users.find(
       (user) => user.email === values.email && user.password === values.password
-    )
-    if (usercheck) {
+    ) 
+    if (userCheck) {
       setSucces(true)
+      setIsLogIn(true)
       navigate('/edition')
     }
   }
 
   const clickedButton = () => {
-    console.log('clicked')
     setClicked(true)
   }
 
@@ -72,7 +75,6 @@ export const Sign = ({ users }) => {
               id='email'
               name='email'
               type='email'
-              type='text'
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
@@ -107,9 +109,7 @@ export const Sign = ({ users }) => {
               Sign
             </ButtonStyle>
           </InputDiv>
-          {succes && clicked ? (
-            <p>Login successful</p>
-          ) : (
+          {!succes && clicked && (
             <p>"Wrong email or username"</p>
           )}
         </form>

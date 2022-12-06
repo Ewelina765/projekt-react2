@@ -14,7 +14,8 @@ import Navigation from './Components/Header/Navigation'
 import Error from './Components/Error'
 import Search from './Components/Search'
 import BackGroundFoto from './UI/Background'
-const queryClient = new QueryClient()
+import { LogInProvider } from './Contexts/LogContext'
+import LogOut from './Components/LogOut'
 
 const S = {
   RegistrationWrapper: styled(Registration)`
@@ -41,13 +42,12 @@ const App = () => {
       const response = await fetch('http://localhost:8002/users')
       const data = await response.json()
       setUsers(data)
-      console.log('users', users)
     }
     fetchUser()
   }, [users.length])
 
   return (
-    <div>
+    <LogInProvider>
       <nav>
         <Navigation/>
       </nav>
@@ -56,12 +56,13 @@ const App = () => {
           <Route path='/' element={<App />} />
           <Route index element={<Home/>} />
           <Route path='/registration' element={<S.RegistrationWrapper />} />
+          <Route path='/logout' element={<LogOut/>}/>
           <Route path='/sign' element={<Sign users={users} />} />
           <Route path='*' element={<Error />} />
           <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} />
         </Routes>
      </S.Main>
-    </div>
+    </LogInProvider>
   )
 }
 

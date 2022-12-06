@@ -34,7 +34,7 @@ const basicSchema = yup.object().shape({
 })
 
 export const Registration = ({ className }) => {
-  const [newUser, setNewUser] = useState()
+  
   const [succes, setSucces] = useState(false)
   const {
     values,

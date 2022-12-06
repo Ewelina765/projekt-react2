@@ -1,21 +1,20 @@
 import styled from 'styled-components'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PokemonCard from './PokemonCard'
 import useFetch from '../hooks/useFetch'
+import Button from '@mui/material/Button'
 
 const S = {
   Container: styled.div`
- display: flex;
- flex-direction: column;
- justify-content: center;
-    align-items: center; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   `,
 
   Card: styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    
   `,
   Input: styled.div`
     background-color: green;
@@ -25,8 +24,8 @@ const S = {
     align-items: center;
   `,
   ButtonDiv: styled.div`
-  padding: 40px;
-  `
+    padding: 40px;
+  `,
 }
 
 const PokemonList = ({ pokemons, inputText }) => {
@@ -43,7 +42,6 @@ const PokemonList = ({ pokemons, inputText }) => {
     setUrl(prevURL)
   }
 
-
   return (
     <S.Container>
       {isLoading && <h2>Loading...</h2>}
@@ -52,15 +50,16 @@ const PokemonList = ({ pokemons, inputText }) => {
         <div>
           <S.Card>
             <ul>
-              {pokemons.map((pokemon) => (
+              {pokemons.map((pokemon, index) => (
                 <PokemonCard
-                  key={pokemon.name}
+                some={index=1}
+                  id={pokemon.id}
+                  key={pokemon.id}
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
-                 
                 ></PokemonCard>
-              ))}
+              ))}{' '}
             </ul>
           </S.Card>
         </div>
@@ -69,13 +68,14 @@ const PokemonList = ({ pokemons, inputText }) => {
         <div>
           <S.Card>
             <ul>
-              {data.results.map((pokemon) => (
+              {data.results.map((pokemon, index) => (
                 <PokemonCard
-                  key={pokemon.name}
+                some={index+1}
+                  id={pokemon.id}
+                  key={pokemon.id}
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
-                  
                 ></PokemonCard>
               ))}
             </ul>
@@ -83,8 +83,22 @@ const PokemonList = ({ pokemons, inputText }) => {
         </div>
       )}
       <S.ButtonDiv>
-        <button onClick={prevPage}>Previous</button>
-        <button onClick={nextPage}>Next</button>
+        <Button
+          variant='contained'
+          size='medium'
+          style={{ backgroundColor: '#80ced6' }}
+          onClick={prevPage}
+        >
+          Previous
+        </Button>
+        <Button
+          variant='contained'
+          size='medium'
+          style={{ backgroundColor: '#80ced6' }}
+          onClick={nextPage}
+        >
+          Next
+        </Button>
       </S.ButtonDiv>
     </S.Container>
   )

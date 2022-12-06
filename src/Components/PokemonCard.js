@@ -9,7 +9,8 @@ import PokemonDetail from './PokemonDetail'
 import Card from '../UI/Card'
 import useFetch from '../hooks/useFetch'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ColorizeIcon from '@mui/icons-material/Colorize'
+
 const S = {
   Container: styled.div`
     display: flex;
@@ -44,101 +45,114 @@ const S = {
   `,
   Favourites: styled(FavoriteIcon)`
     color: ${({ active }) => (active ? 'red' : 'grey')};
+    margin-left: 0px;
+  `,
+  DivImg: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  `,
+  IconDiv: styled.div``,
+  Sword: styled(ColorizeIcon)`
+    color: ${({ active }) => (active ? 'black' : 'grey')};
+  `,
+  StyleLink: styled(Link)`
+    text-decoration: none;
+    color: #034f84;
   `,
 }
 
-const PokemonCard = ({ name, url }) => {
+const PokemonCard = ({ name, url, id , some}) => {
   const [favourites, setFavourites] = useState([])
   const [clickedIcon, setClickedIcon] = useState(false)
-  const [inFav, setInFav] = useState(false)
+  const [isInFav, setIsInFav] = useState(false)
 
   const { data } = useFetch(url)
+  console.log('idcard', some, name)
+  console.log(data)
 
-  const { data2 } = useFetch(
-    'https://pokeapi.co/api/v2/pokemon?limit=15&offset=0'
-  )
 
-  useEffect(() => {
-    const addToFavourites = (data2) => {
-      setClickedIcon((clickedIcon) => !clickedIcon)
-      if (data2) {
-        const filterPoke = data2.results.filter(
-          (item) => item.name !== favourites.name
-        )
-        setInFav(true)
-        if (clickedIcon && inFav) {
-          setFavourites((favourites) => [...favourites, filterPoke])
-          console.log('favs', favourites)
-        }
-        if (clickedIcon === false) {
-          const index = favourites.indexOf(filterPoke)
-          if (index > -1) {
-            favourites.splice(index, 1)
-          }
-        }
+  const addToFavourites = () => {
+    setClickedIcon((clickedIcon) => !clickedIcon)
+    if (data) {
+      const filterPoke = data.results.map(
+        (item) => item.id === some
+      )
+      setIsInFav(true)
+
+      if (clickedIcon && !isInFav) {
+        setFavourites((favourites) => [...favourites, filterPoke])
+        console.log('favs', favourites)
       }
-      addToFavourites()
+      if(!clickedIcon) {
+        setFavourites(favourites.filter(item => item.id !== some))
+      }
     }
-  }, [])
+  }
+  useEffect(()=>{
+    addToFavourites()
+  },[favourites.length])
 
-  // const addToFavourites = () => {
+
+  // const addToFavourites = (e) => {
   //   setClickedIcon((clickedIcon) => !clickedIcon)
-
-  //   if (data2) {
-  //     const filterPoke = data2.results.filter(
-  //       (item) => item.name !== favourites.name
-  //     )
-  //     setInFav(true)
-
-  //     if (clickedIcon && inFav) {
-  //       setFavourites((favourites) => [...favourites, filterPoke])
-  //       console.log('favs', favourites)
+  //   if (data) {
+  //     const findItem = data.results.find((item) => item.name === e)
+  //     if (findItem) {
+  //       const checkIfIsFav = favourites.find((item) => item.name === e)
+  //       if (!checkIfIsFav && clickedIcon) {
+  //         setFavourites([...favourites, findItem])
+  //         console.log('fav', favourites)
+  //       } else {
+  //         setFavourites(favourites.filter((item) => item.name !== e))
+  //       }
   //     }
   //   }
-  // }
-
-  // const removeFavourite = () => {
-  //   setClickedIcon(false)
   // }
 
   if (!data) return null
   return (
     <S.Li>
-      <S.Favourites active={clickedIcon} onClick={addToFavourites} />
-      <div>
-        <S.Container>
-          <Link to={`/pokemons/${name}`}>
-            <Card>
-              <div>
-                <S.Img src={data.sprites.other.dream_world.front_default} />
-              </div>
+      <S.Container>
+        <Card>
+          <S.IconDiv>
+            <S.Favourites
+              active={clickedIcon}
+              onClick={addToFavourites}
+            />
+            <S.Sword />
+          </S.IconDiv>
+          <S.StyleLink to={`/pokemons/${name}`}>
+            <S.DivImg>
+              <S.Img src={data.sprites.other.dream_world.front_default} />
               <h1>{name.charAt(0).toLocaleUpperCase() + name.slice(1)}</h1>
-              <S.Features>
-                <S.Two>
-                  <S.One>
-                    <div>{data.height}</div>
-                    <div>Height</div>
-                  </S.One>
-                  <S.One>
-                    <div>{data.base_experience}</div>
-                    <div>Base experience</div>
-                  </S.One>
-                </S.Two>
-                <S.Two>
-                  <S.One>
-                    <div>{data.weight}</div>
-                    <div>Weight</div>
-                  </S.One>
-                  <S.One>
-                    <div>{data.abilities[0].ability.name}</div>
-                    <div>Ability</div>
-                  </S.One>
-                </S.Two>
-              </S.Features>
-            </Card>
-          </Link>
-        </S.Container>
-      </div>
+            </S.DivImg>
+            <S.Features>
+              <S.Two>
+                <S.One>
+                  <div>{data.height}</div>
+                  <div>Height</div>
+                </S.One>
+                <S.One>
+                  <div>{data.base_experience}</div>
+                  <div>Base experience</div>
+                </S.One>
+              </S.Two>
+              <S.Two>
+                <S.One>
+                  <div>{data.weight}</div>
+                  <div>Weight</div>
+                </S.One>
+                <S.One>
+                  <div>{data.abilities[0].ability.name}</div>
+                  <div>Ability</div>
+                </S.One>
+              </S.Two>
+            </S.Features>
+          </S.StyleLink>
+        </Card>
+      </S.Container>
     </S.Li>
   )
 }

@@ -2,9 +2,11 @@ import styled from 'styled-components'
 import Logo from './Logo'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { LogInContext } from '../../Contexts/LogContext'
+import { useContext } from 'react'
 const S = {
   Container: styled.div`
-    background-color: #fefbd8;
+    background-color: #ffef96;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -28,8 +30,20 @@ const S = {
     display: flex;
     gap: 10px 20px;
   `,
+  StyleLink: styled(NavLink)`
+  text-decoration: none;
+  color: #034f84;
+  
+};
+  
+  `,
 }
 const Navigation = () => {
+  const {isLogIn, setIsLogIn} = useContext(LogInContext)
+
+  const logOut = () => {
+setIsLogIn(false)
+  }
   return (
     <S.Container>
       <div>
@@ -37,15 +51,15 @@ const Navigation = () => {
       </div>
       <S.Nav>
         <S.NavBasic>
-          <NavLink to='/favourites'>Ulubione</NavLink>
-          <NavLink to='/arena'>Arena</NavLink>
-          <NavLink to='/sign'>Logowanie</NavLink>
-          <NavLink to='/registration'>Rejestracja</NavLink>
+          <S.StyleLink to='favourites' >Ulubione</S.StyleLink>
+          <S.StyleLink to='arena'>Arena</S.StyleLink>
+          <S.StyleLink to='sign'>Logowanie</S.StyleLink>
+          <S.StyleLink to='registration'>Rejestracja</S.StyleLink>
         </S.NavBasic>
-        <S.NavExtend>
-          <NavLink to='/edition'>Edycja</NavLink>
-          <NavLink to='/logout'>Wyloguj</NavLink>
-        </S.NavExtend>
+       {isLogIn &&(<S.NavExtend>
+          <S.StyleLink to='edition'>Edycja</S.StyleLink>
+          <S.StyleLink to='logout' onClick={logOut}>Wyloguj</S.StyleLink>
+        </S.NavExtend>)} 
       </S.Nav>
     </S.Container>
   )
