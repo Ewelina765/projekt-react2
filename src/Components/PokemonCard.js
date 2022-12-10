@@ -4,12 +4,13 @@ import axios from 'axios'
 import React, { Component, useEffect, useState } from 'react'
 import { height } from '@mui/system'
 import Search from './Search'
-import { Link } from 'react-router-dom'
+import { BrowserRouter, Link } from 'react-router-dom'
 import PokemonDetail from './PokemonDetail'
 import Card from '../UI/Card'
 import useFetch from '../hooks/useFetch'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ColorizeIcon from '@mui/icons-material/Colorize'
+import { Routes, Route } from 'react-router-dom'
 
 const S = {
   Container: styled.div`
@@ -63,68 +64,68 @@ const S = {
   `,
 }
 
-const PokemonCard = ({ name, url, id, index }) => {
+const PokemonCard = ({ name, url, id, index, data2 }) => {
   const [favourites, setFavourites] = useState([])
   const [clickedIcon, setClickedIcon] = useState(false)
   const [isInFav, setIsInFav] = useState(false)
 
   const { data } = useFetch(url)
 
+
+  // const addToFavourites = index => {
+  //   setClickedIcon((clickedIcon) => !clickedIcon)
+  //   if (favourites.includes(index) && clickedIcon) setFavourites(favourites=>[...favourites, index]);
+  //   console.log(index);
+  // };
+  // const addToFavourites = (index) => {
+  //   setClickedIcon((clickedIcon) => !clickedIcon)
+  //  const exist  = favourites.find((item) => item.id == index)
+   
+    // if (clickedIcon && !exist  && favourites.length>0) {
+     
+      
+       
+    //     setFavourites((favourites)=>[...favourites, id])
+      
+    // }
+    // if (!clickedIcon) {
+    //   const filter = favourites.filter((item) => item.id !== id)
+    //   return filter
+    // }
+  
+
+  
+
   const addToFavourites = () => {
     setClickedIcon((clickedIcon) => !clickedIcon)
-    if (clickedIcon && favourites.length === 0) {
-      setFavourites(favourites.push(id))
-      console.log('fav', favourites)
-    }
-    if (clickedIcon && favourites.length > 0) {
-      const searchPoke = favourites.find((item) => item.id !== id)
-      setFavourites((prev) => [...prev, id])
-      console.log('fav', favourites)
-    }
-    if (!clickedIcon) {
-      const filter = favourites.filter((item) => item.id !== id)
-    }
-  }
+   
+      const filterPoke = data2.results.find(
+        (item) => item.id === index
+      )
 
-  // const addToFavourites = (id) => {
-  //   setClickedIcon((clickedIcon) => !clickedIcon)
-  //   if (data) {
-  //     const filterPoke = data.results.map(
-  //       (item) => item.id === id
-  //     )
-  //     setIsInFav(true)
-
-  //     if (clickedIcon && !isInFav) {
-  //       setFavourites((favourites) => [...favourites, name])
-  //       console.log('favs', favourites)
-  //     }
-  //     if(!clickedIcon) {
-  //       setFavourites(favourites.filter(item => item.id !== id))
-  //     }
-  //   }
-  // }
+     if (clickedIcon && favourites.length===0 ) {
+        setFavourites((favourites) => [...favourites, index])
+        console.log('favs', favourites)
+      } 
+      if (clickedIcon && favourites.length > 0 ) {
+        
+        setFavourites(favourites.map((x) => x.id===index? x : [...favourites,index]))
+        console.log('favs', favourites)
+      } 
+      if(!clickedIcon) {
+        setFavourites(favourites.filter(item => item.id !== index))
+      }
+    }
+  
   useEffect(() => {
     addToFavourites()
   }, [favourites.length])
 
-  // const addToFavourites = (e) => {
-  //   setClickedIcon((clickedIcon) => !clickedIcon)
-  //   if (data) {
-  //     const findItem = data.results.find((item) => item.name === e)
-  //     if (findItem) {
-  //       const checkIfIsFav = favourites.find((item) => item.name === e)
-  //       if (!checkIfIsFav && clickedIcon) {
-  //         setFavourites([...favourites, findItem])
-  //         console.log('fav', favourites)
-  //       } else {
-  //         setFavourites(favourites.filter((item) => item.name !== e))
-  //       }
-  //     }
-  //   }
-  // }
+  
 
   if (!data) return null
   return (
+   
     <S.Li>
       <S.Container>
         <Card>
@@ -132,7 +133,7 @@ const PokemonCard = ({ name, url, id, index }) => {
             <S.Favourites active={clickedIcon} onClick={addToFavourites} />
             <S.Sword />
           </S.IconDiv>
-          <S.StyleLink to={`/pokemons/${name}`}>
+          <S.StyleLink to={`/pokemons/${name}` }>
             <S.DivImg>
               <S.Img src={data.sprites.other.dream_world.front_default} />
               <h1>{name.charAt(0).toLocaleUpperCase() + name.slice(1)}</h1>
@@ -161,8 +162,19 @@ const PokemonCard = ({ name, url, id, index }) => {
             </S.Features>
           </S.StyleLink>
         </Card>
+    
+ <Routes>
+        
+          <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} />
+          
+        </Routes>
+
       </S.Container>
+      
     </S.Li>
+    
+   
+  
   )
 }
 

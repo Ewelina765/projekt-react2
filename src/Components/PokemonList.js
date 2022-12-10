@@ -41,7 +41,7 @@ const PokemonList = ({ pokemons, inputText }) => {
   const prevPage = () => {
     setUrl(prevURL)
   }
-
+  
   return (
     <S.Container>
       {isLoading && <h2>Loading...</h2>}
@@ -58,6 +58,7 @@ const PokemonList = ({ pokemons, inputText }) => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
+                  data2={data}
                 ></PokemonCard>
               ))}{' '}
             </ul>
@@ -76,6 +77,7 @@ const PokemonList = ({ pokemons, inputText }) => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
+                  data2={data}
                 ></PokemonCard>
               ))}
             </ul>

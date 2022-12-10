@@ -1,21 +1,17 @@
 import Home from './Components/Home'
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { Routes, Route } from 'react-router-dom'
 import { Registration } from './Components/Registration'
 import styled from 'styled-components'
 import { Sign } from './Components/Sign'
-import PokemonList from './Components/PokemonList'
-import PokemonCard from './Components/PokemonCard'
-import { render } from 'react-dom'
 import PokemonDetail from './Components/PokemonDetail'
-import axios from 'axios'
 import Navigation from './Components/Header/Navigation'
 import Error from './Components/Error'
-import Search from './Components/Search'
-import BackGroundFoto from './UI/Background'
 import { LogInProvider } from './Contexts/LogContext'
 import LogOut from './Components/LogOut'
+import Edition from './Components/Edition'
+import Favourites from './Components/Favourites'
+import Arena from './Components/Arena'
 
 const S = {
   RegistrationWrapper: styled(Registration)`
@@ -31,7 +27,6 @@ const S = {
  height: 100vw;
  background-color: #d5f4e6;
   `,
- 
 }
 
 const App = () => {
@@ -46,22 +41,28 @@ const App = () => {
     fetchUser()
   }, [users.length])
 
+
+
   return (
     <LogInProvider>
       <nav>
-        <Navigation/>
+        <Navigation />
       </nav>
       <S.Main>
         <Routes>
           <Route path='/' element={<App />} />
-          <Route index element={<Home/>} />
+          <Route index element={<Home />} />
           <Route path='/registration' element={<S.RegistrationWrapper />} />
-          <Route path='/logout' element={<LogOut/>}/>
+          <Route path='/logout' element={<LogOut />} />
           <Route path='/sign' element={<Sign users={users} />} />
           <Route path='*' element={<Error />} />
-          <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} />
+          {/* <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} /> */}
+          <Route path='/edition' element={<Edition/>}/>
+          <Route path='/arena' element={<Arena/>}/>
+          <Route path='/favourites' element={<Favourites/>}/>
+
         </Routes>
-     </S.Main>
+      </S.Main>
     </LogInProvider>
   )
 }
