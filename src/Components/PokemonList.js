@@ -28,10 +28,11 @@ const S = {
   `,
 }
 
-const PokemonList = ({ pokemons, inputText }) => {
+const PokemonList = ({ pokemons, inputText, favourites, setFavourites }) => {
   const [url, setUrl] = useState(
     'https://pokeapi.co/api/v2/pokemon?limit=15&offset=0'
   )
+  
 
   const { data, isLoading, error, nextURL, prevURL } = useFetch(url)
 
@@ -58,7 +59,8 @@ const PokemonList = ({ pokemons, inputText }) => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
-                  data2={data}
+                  favourites={favourites}
+                  setFavourites={setFavourites}
                 ></PokemonCard>
               ))}{' '}
             </ul>
@@ -77,7 +79,8 @@ const PokemonList = ({ pokemons, inputText }) => {
                   name={pokemon.name}
                   url={pokemon.url}
                   pokemons={pokemons}
-                  data2={data}
+                  favourites={favourites}
+                  setFavourites={setFavourites}
                 ></PokemonCard>
               ))}
             </ul>

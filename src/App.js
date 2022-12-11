@@ -31,6 +31,7 @@ const S = {
 
 const App = () => {
   const [users, setUsers] = useState([])
+  const [favourites, setFavourites] = useState([])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,6 +42,7 @@ const App = () => {
     fetchUser()
   }, [users.length])
 
+  
 
 
   return (
@@ -51,16 +53,15 @@ const App = () => {
       <S.Main>
         <Routes>
           <Route path='/' element={<App />} />
-          <Route index element={<Home />} />
+          <Route index element={<Home favourites={favourites} setFavourites={setFavourites}/>} />
           <Route path='/registration' element={<S.RegistrationWrapper />} />
           <Route path='/logout' element={<LogOut />} />
           <Route path='/sign' element={<Sign users={users} />} />
           <Route path='*' element={<Error />} />
-          {/* <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} /> */}
+          <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} />
           <Route path='/edition' element={<Edition/>}/>
           <Route path='/arena' element={<Arena/>}/>
-          <Route path='/favourites' element={<Favourites/>}/>
-
+          <Route path='/favourites' element={<Favourites favourites={favourites} setFavourites={setFavourites}/>}/>
         </Routes>
       </S.Main>
     </LogInProvider>

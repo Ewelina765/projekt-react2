@@ -11,7 +11,7 @@ const S = {
   `,
 }
 
-const Home = () => {
+const Home = ({favourites, setFavourites}) => {
   const [inputText, setInputText] = useState('')
   const [pokemons, setPokemons] = useState([])
 
@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <S.Container>
       <Search inputText={inputText} setInputText={setInputText} />
-      <PokemonList pokemons={pokemons} data={data} inputText={inputText} />
+      <PokemonList pokemons={pokemons} data={data} inputText={inputText} favourites={favourites} setFavourites={setFavourites} />
     </S.Container>
   )
 }
