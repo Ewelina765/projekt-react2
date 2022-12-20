@@ -28,12 +28,11 @@ const S = {
   `,
 }
 
-const PokemonList = ({ pokemons, inputText, favourites, setFavourites }) => {
+const PokemonList = ({ pokemons, inputText, favourites, setFavourites, battle, setBattle, edit, setEdit}) => {
   const [url, setUrl] = useState(
     'https://pokeapi.co/api/v2/pokemon?limit=15&offset=0'
   )
   
-
   const { data, isLoading, error, nextURL, prevURL } = useFetch(url)
 
   const nextPage = () => {
@@ -42,7 +41,7 @@ const PokemonList = ({ pokemons, inputText, favourites, setFavourites }) => {
   const prevPage = () => {
     setUrl(prevURL)
   }
-  
+ 
   return (
     <S.Container>
       {isLoading && <h2>Loading...</h2>}
@@ -51,9 +50,8 @@ const PokemonList = ({ pokemons, inputText, favourites, setFavourites }) => {
         <div>
           <S.Card>
             <ul>
-              {pokemons.map((pokemon, ind) => (
+              {pokemons.map((pokemon) => (
                 <PokemonCard
-                  index={ind + 1}
                   id={pokemon.id}
                   key={pokemon.id}
                   name={pokemon.name}
@@ -61,8 +59,12 @@ const PokemonList = ({ pokemons, inputText, favourites, setFavourites }) => {
                   pokemons={pokemons}
                   favourites={favourites}
                   setFavourites={setFavourites}
+                  battle={battle}
+                  setBattle={setBattle}
+                  edit={edit}
+                  setEdit={setEdit}
                 ></PokemonCard>
-              ))}{' '}
+              ))}
             </ul>
           </S.Card>
         </div>
@@ -71,9 +73,9 @@ const PokemonList = ({ pokemons, inputText, favourites, setFavourites }) => {
         <div>
           <S.Card>
             <ul>
-              {data.results.map((pokemon, ind) => (
+              {data.results.map((pokemon) => (
                 <PokemonCard
-                  index={ind + 1}
+
                   id={pokemon.id}
                   key={pokemon.id}
                   name={pokemon.name}
@@ -81,6 +83,10 @@ const PokemonList = ({ pokemons, inputText, favourites, setFavourites }) => {
                   pokemons={pokemons}
                   favourites={favourites}
                   setFavourites={setFavourites}
+                  battle={battle}
+                  setBattle={setBattle}
+                  edit={edit} 
+                  setEdit={setEdit}
                 ></PokemonCard>
               ))}
             </ul>

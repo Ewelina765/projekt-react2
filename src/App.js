@@ -12,6 +12,8 @@ import LogOut from './Components/LogOut'
 import Edition from './Components/Edition'
 import Favourites from './Components/Favourites'
 import Arena from './Components/Arena'
+import useFetch from './hooks/useFetch'
+import GlobalStyle from './UI/createGlobalStyle'
 
 const S = {
   RegistrationWrapper: styled(Registration)`
@@ -32,6 +34,9 @@ const S = {
 const App = () => {
   const [users, setUsers] = useState([])
   const [favourites, setFavourites] = useState([])
+  const [battle, setBattle] = useState([])
+  const [edit, setEdit] = useState([])
+  const [state, setState] = useState([])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -42,26 +47,40 @@ const App = () => {
     fetchUser()
   }, [users.length])
 
-  
+  const { data } = useFetch('https://pokeapi.co/api/v2/pokemon?limit=151')
 
-
+ 
   return (
     <LogInProvider>
+      <GlobalStyle/>
       <nav>
         <Navigation />
       </nav>
       <S.Main>
         <Routes>
           <Route path='/' element={<App />} />
-          <Route index element={<Home favourites={favourites} setFavourites={setFavourites}/>} />
+          <Route
+            index
+            element={
+              <Home favourites={favourites} setFavourites={setFavourites} battle={battle} setBattle={setBattle} edit={edit} setEdit={setEdit}/>
+            }
+          />
           <Route path='/registration' element={<S.RegistrationWrapper />} />
           <Route path='/logout' element={<LogOut />} />
           <Route path='/sign' element={<Sign users={users} />} />
           <Route path='*' element={<Error />} />
           <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} />
-          <Route path='/edition' element={<Edition/>}/>
-          <Route path='/arena' element={<Arena/>}/>
-          <Route path='/favourites' element={<Favourites favourites={favourites} setFavourites={setFavourites}/>}/>
+          <Route path='/edition' element={<Edition edit={edit} setEdit={setEdit}/>} />
+          <Route path='/arena' element={<Arena battle={battle} setBattle={setBattle}  />} />
+          <Route
+            path='/favourites'
+            element={
+              <Favourites
+                setFavourites={setFavourites}
+                favourites={favourites}
+              />
+            }
+          />
         </Routes>
       </S.Main>
     </LogInProvider>

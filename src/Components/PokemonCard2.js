@@ -1,17 +1,17 @@
+import useFetch from '../hooks/useFetch'
 import styled from 'styled-components'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Card from '../UI/Card'
-import useFetch from '../hooks/useFetch'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ColorizeIcon from '@mui/icons-material/Colorize'
-import IconButton from '@mui/material/IconButton'
-import BrushIcon from '@mui/icons-material/Brush';
+import Arena from '../Components/Arena'
 
 const S = {
   Container: styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
   `,
   Img: styled.img`
     height: 150px;
@@ -51,50 +51,37 @@ const S = {
     justify-content: center;
   `,
   IconDiv: styled.div``,
-
   Sword: styled(ColorizeIcon)`
     color: ${({ active }) => (active ? 'black' : 'grey')};
-    cursor: pointer;
-    transform: rotate(90deg);
-   
-  `,
-  Edit:styled(BrushIcon)`
- color: ${({ active }) => (active ? 'blue' : 'grey')};
-    cursor: pointer;
     transform: rotate(90deg);
   `,
   StyleLink: styled(Link)`
     text-decoration: none;
     color: #034f84;
   `,
-   Font:styled.div`
-   font-weight: bolder;
-   `
+  Font:styled.div`
+  font-weight: bolder;
+  `
 }
 
-const PokemonCard = ({
-  name,
-  url,
-  favourites,
+const PokemonCard2 = ({
   setFavourites,
+  favourites,
+  id,
   battle,
   setBattle,
   edit,
-  setEdit
+  setEdit,
+  heightP,
+  setHeightP,
 }) => {
-  const [clickedHeart, setClickedHeart] = useState(false)
-  const [clickedSword, setClickedSword] = useState(false)
-  const [clickedEdit, setClickedEdit] = useState(false)
-  const [inFav, setInFav] = useState(false)
-  const [isDisabled, setIsDisabled] = useState(false)
+  const [clickedHeart, setClickedHeart] = useState(true)
+  const [clickedSword, setClickedSword] = useState(true)
 
-  const { data } = useFetch(url)
+  const { data } = useFetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
 
-  // useEffect(() => {
-  //   if (favourites.length > 0) {
-  //     setInFav(favourites.includes(data.id))
-  //   }
-  // }, [favourites.length])
+  
+  
 
   const onHeartClick = () => {
     setClickedHeart((clickedHeart) => !clickedHeart)
@@ -112,19 +99,6 @@ const PokemonCard = ({
         : [...prev, data.id]
     )
   }
-  const onEditClick = () => {
-    setClickedEdit((clickedEdit) => !clickedEdit)
-    setEdit((prev) =>
-      prev.includes(data.id)
-        ? edit.filter((x) => x !== data.id)
-        : [...prev, data.id]
-    )
-  }
-console.log(edit)
-  if (battle.length > 2) {
-    battle.splice(2)
-  }
-
 
   if (!data) return null
   return (
@@ -132,20 +106,15 @@ console.log(edit)
       <S.Container>
         <Card>
           <S.IconDiv>
-            <IconButton>
-              <S.Favourites active={clickedHeart} onClick={onHeartClick} />
-            </IconButton>
-            <IconButton disabled={battle.length > 1}>
-              <S.Sword active={clickedSword} onClick={onSwordClick} />
-            </IconButton>
-            <IconButton>
-              <S.Edit active={clickedEdit} onClick={onEditClick}  />
-            </IconButton>
+            <S.Favourites active={clickedHeart} onClick={onHeartClick} />
+            <S.Sword active={clickedSword} onClick={onSwordClick} />
           </S.IconDiv>
-          <S.StyleLink to={`/pokemons/${name}`}>
+          <S.StyleLink to={`/pokemons/${data.name}`}>
             <S.DivImg>
               <S.Img src={data.sprites.other.dream_world.front_default} />
-              <h1>{name.charAt(0).toLocaleUpperCase() + name.slice(1)}</h1>
+              <h1>
+                {data.name.charAt(0).toLocaleUpperCase() + data.name.slice(1)}
+              </h1>
             </S.DivImg>
             <S.Features>
               <S.Two>
@@ -176,4 +145,4 @@ console.log(edit)
   )
 }
 
-export default PokemonCard
+export default PokemonCard2

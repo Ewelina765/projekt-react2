@@ -19,7 +19,6 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
   `,
   Img: styled.img`
     height: 250px;
