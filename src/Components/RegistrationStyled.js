@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Button from '@mui/material/Button'
 
 export const Container = styled.div`
   display: flex;
@@ -8,7 +9,7 @@ export const Container = styled.div`
 `
 
 export const Card = styled.div`
-  background-color: #77a8a8;
+  background-color: #80ced6;
   margin-top: -900px;
   width: 40%;
   height: 40%;
@@ -20,7 +21,6 @@ export const Card = styled.div`
 `
 export const InputStyle = styled.input`
   align-content: center;
-
   border-color: ${(props) => props.borderStyled};
   width: 500px;
   height: 30px;
@@ -43,7 +43,7 @@ export const InputDiv = styled.div`
 `
 
 export const SignContainer = styled.div`
-  background-color: #d9ecd0;
+  background-color: #d5f4e6;
   height: 100vw;
   width: 100vw;
   display: flex;

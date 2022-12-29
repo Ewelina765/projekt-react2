@@ -3,6 +3,7 @@ import React, { Component, useState } from 'react'
 import * as yup from 'yup'
 import { LogInContext } from '../Contexts/LogContext'
 import { useContext } from 'react'
+import Button from '@mui/material/Button'
 import {
   SignCard,
   InputStyle,
@@ -28,6 +29,7 @@ export const Sign = ({ users }) => {
   const navigate = useNavigate()
   const { setIsLogIn } = useContext(LogInContext)
 
+  console.log(users, 'users')
   const {
     values,
     errors,
@@ -51,11 +53,11 @@ export const Sign = ({ users }) => {
     console.log('values', values)
     const userCheck = users.find(
       (user) => user.email === values.email && user.password === values.password
-    ) 
+    )
     if (userCheck) {
       setSucces(true)
       setIsLogIn(true)
-      navigate('/edition')
+      navigate('/')
     }
   }
 
@@ -66,7 +68,7 @@ export const Sign = ({ users }) => {
   return (
     <SignContainer>
       <SignCard>
-        <h1>Sign Up</h1>
+        <h1>Logowanie</h1>
         <form onSubmit={handleSubmit}>
           <InputDiv>
             <label htmlFor='email'>Email</label>
@@ -84,7 +86,7 @@ export const Sign = ({ users }) => {
             )}
           </InputDiv>
           <InputDiv>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password'>Hasło</label>
             <InputStyle
               borderStyled={
                 errors.password && touched.password ? 'red' : 'black'
@@ -105,13 +107,17 @@ export const Sign = ({ users }) => {
           </InputDiv>
 
           <InputDiv>
-            <ButtonStyle onClick={clickedButton} type='submit'>
-              Sign
-            </ButtonStyle>
+            <Button
+              onClick={clickedButton}
+              type='submit'
+              variant='contained'
+              size='medium'
+              style={{ backgroundColor: '#034f84' }}
+            >
+              Zaloguj się
+            </Button>
           </InputDiv>
-          {!succes && clicked && (
-            <p>"Wrong email or username"</p>
-          )}
+          {!succes && clicked && <p>"Wrong email or username"</p>}
         </form>
       </SignCard>
     </SignContainer>

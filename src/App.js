@@ -18,13 +18,12 @@ import GlobalStyle from './UI/createGlobalStyle'
 const S = {
   RegistrationWrapper: styled(Registration)`
     && {
-      background-color: #d9ecd0;
+      background-color: #d5f4e6;
       height: 100vw;
       width: 100vw;
     }
   `,
   Main: styled.main`
-  background-image: url(BackGroundFoto)
  width: 100vw;
  height: 100vw;
  background-color: #d5f4e6;

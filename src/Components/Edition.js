@@ -1,34 +1,82 @@
-import React, { useState } from 'react'
-import { useFormik } from 'formik'
-import * as yup from 'yup'
-import PokemonCard2 from './PokemonCard2'
-import PokemonEdit from '../PokemonEdit'
+import React, { useEffect, useState } from 'react'
+import PokemonEdit from './PokemonEdit'
+import styled from 'styled-components'
+import PokemonEditForm from './PokemonEditForm'
+import axios from 'axios'
 
-// const basicSchema = yup.object().shape({
-//   name: yup.string(),
-//   height: yup.number(),
-//   weight: yup.number(),
-//   baseExp: yup.number(),
-//   ability: yup.string(),
-// })
+const S = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  `,
+  Card: styled.div`
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+ 
+ 
+  `,
+}
 
-const Edition = ({edit, setEdit}) => {
+const Edition = ({ edit, setEdit }) => {
+  const [data, setData] = useState('')
   const [nameP, setNameP] = useState('')
   const [heightP, setHeightP] = useState('')
   const [weightP, setWeightP] = useState('')
   const [baseExp, setBaseExp] = useState('')
   const [ability, setAbility] = useState('')
- console.log('height', heightP)
+  const [clickedEdit, setClickedEdit] = useState(true)
+
+  useEffect(() => {
+    const pokeCharacteristic = async () => {
+      const response = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/${edit}`
+      )
+      setData(response.data)
+      setNameP(response.data.name)
+      setHeightP(response.data.height)
+      setWeightP(response.data.weight)
+      setBaseExp(response.data.base_experience)
+      setAbility(response.data.abilities[0].ability.name)
+    }
+    pokeCharacteristic()
+  }, [])
+
+  const onEditClick = () => {
+    setEdit([])
+  }
+
+if(!data) return null
   return (
-    <div>
-      {/* <div>
-      {edit.map((id) => {
-          return<div key={id.id}> <PokemonCard2 heightP={heightP} setHeightP={setHeightP} id={id} edit={edit} setEdit={setEdit} /></div>
-        })}
-      </div> */}
-      <div><PokemonEdit edit={edit} setEdit={setEdit} setHeight={setHeightP} heightP={heightP}/></div>
+    <S.Container>
+      <div>
+        <PokemonEdit
+          edit={edit}
+          setEdit={setEdit}
+          data={data}
+          nameP={nameP}
+          heightP={heightP}
+          baseExp={baseExp}
+          weightP={weightP}
+          ability={ability}
+          setClickedEdit={setClickedEdit}
+        />
       </div>
-      
+      <S.Card>
+        <PokemonEditForm
+          edit={edit}
+          setEdit={setEdit}
+          setNameP={setNameP}
+          setHeightP={setHeightP}
+          setWeightP={setWeightP}
+          setBaseExp={setBaseExp}
+          setAbility={setAbility}
+        />
+      </S.Card>
+      {edit.length === 0 && <p>Brak kart do edycji</p>}
+      <button onClick={onEditClick}>Usuń</button>
+    </S.Container>
   )
 }
 

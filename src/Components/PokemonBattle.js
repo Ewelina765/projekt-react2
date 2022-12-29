@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button'
-
 import ColorizeIcon from '@mui/icons-material/Colorize'
 import axios from 'axios'
 
@@ -16,7 +15,6 @@ const S = {
     height: 250px;
     width: 250px;
     opacity: ${({ opacity }) => opacity};
-    /* opacity: ${({ imgOpacity }) => imgOpacity}; */
   `,
 
   PokemonDiv: styled.div`
@@ -40,6 +38,12 @@ const S = {
     height: 0;
     width: 325px;
   `,
+  Buttons: styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+  `
 }
 const PokemonBattle = ({ id, battle, setBattle }) => {
   const [clickedSword, setClickedSword] = useState(true)
@@ -99,31 +103,44 @@ const PokemonBattle = ({ id, battle, setBattle }) => {
     setImgOpacity(pokemonPower1 > pokemonPower2 ? '1' : '0.5')
     setImgOpacity2(pokemonPower2 > pokemonPower1 ? '1' : '0.5')
   }
+  const cleanUp = () => {
+    setBattle([])
+  }
 
   if (!pokemon1 || !pokemon2) return null
   return (
     <S.Container>
       <S.PokemonDiv>
-       
         <S.Img
           src={pokemon1.sprites.other.dream_world.front_default}
           opacity={imgOpacity}
         />
         <S.Trapeze></S.Trapeze>
       </S.PokemonDiv>
-      <div>
-        <Button
-          variant='contained'
-          size='medium'
-          style={{ backgroundColor: '#80ced6' }}
-          disabled={battle.length < 2}
-          onClick={battleClick}
-        >
-          Pojedynek
-        </Button>
-      </div>
+      <S.Buttons>
+        <div>
+          <Button
+            variant='contained'
+            size='medium'
+            style={{ backgroundColor: '#80ced6' }}
+            disabled={battle.length < 2}
+            onClick={battleClick}
+          >
+            Pojedynek
+          </Button>
+        </div>
+        <div>
+          <Button
+            variant='contained'
+            size='medium'
+            style={{ backgroundColor: '#80ced6' }}
+            onClick={cleanUp}
+          >
+            Usuń pokemony z areny
+          </Button>
+        </div>
+      </S.Buttons>
       <S.PokemonDiv>
-     
         <S.Img
           src={pokemon2.sprites.other.dream_world.front_default}
           opacity={imgOpacity2}

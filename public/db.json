@@ -23,6 +23,14 @@
       "password": "Marokowal123#",
       "confirmPassword": "Marokowal123#",
       "id": 3
+    },
+    {
+      "id": 4,
+      "firstName": "Czesław",
+      "lastName": "niemen",
+      "email": "czesiekniem@gmail.com",
+      "password": "CzesiekNiem123*",
+      "confirmPassword": "CzesiekNiem123*"
     }
   ]
 }

@@ -121,10 +121,14 @@ const PokemonCard = ({
     )
   }
 console.log(edit)
+
   if (battle.length > 2) {
     battle.splice(2)
   }
 
+  if(edit.length>1) {
+    edit.splice(1)
+  }
 
   if (!data) return null
   return (
@@ -133,13 +137,13 @@ console.log(edit)
         <Card>
           <S.IconDiv>
             <IconButton>
-              <S.Favourites active={clickedHeart} onClick={onHeartClick} />
+              <S.Favourites active={favourites.includes(data.id)} onClick={onHeartClick} />
             </IconButton>
             <IconButton disabled={battle.length > 1}>
-              <S.Sword active={clickedSword} onClick={onSwordClick} />
+              <S.Sword active={battle.includes(data.id)} onClick={onSwordClick} />
             </IconButton>
-            <IconButton>
-              <S.Edit active={clickedEdit} onClick={onEditClick}  />
+            <IconButton disabled={edit.length > 0}>
+             <S.Edit active={edit.includes(data.id)} onClick={onEditClick}  />
             </IconButton>
           </S.IconDiv>
           <S.StyleLink to={`/pokemons/${name}`}>

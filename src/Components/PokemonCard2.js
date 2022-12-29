@@ -38,7 +38,7 @@ const S = {
   `,
   Li: styled.li`
     display: inline-block;
-    padding: 10px;
+    /* padding: 10px; */
   `,
   Favourites: styled(FavoriteIcon)`
     color: ${({ active }) => (active ? 'red' : 'grey')};
@@ -59,9 +59,9 @@ const S = {
     text-decoration: none;
     color: #034f84;
   `,
-  Font:styled.div`
-  font-weight: bolder;
-  `
+  Font: styled.div`
+    font-weight: bolder;
+  `,
 }
 
 const PokemonCard2 = ({
@@ -79,9 +79,6 @@ const PokemonCard2 = ({
   const [clickedSword, setClickedSword] = useState(true)
 
   const { data } = useFetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-
-  
-  
 
   const onHeartClick = () => {
     setClickedHeart((clickedHeart) => !clickedHeart)
@@ -105,10 +102,18 @@ const PokemonCard2 = ({
     <S.Li>
       <S.Container>
         <Card>
-          <S.IconDiv>
-            <S.Favourites active={clickedHeart} onClick={onHeartClick} />
-            <S.Sword active={clickedSword} onClick={onSwordClick} />
-          </S.IconDiv>
+          {/* <S.IconDiv>
+            {favourites.length === 0 ? (
+              <S.Favourites active={clickedHeart} onClick={onHeartClick} />
+            ) : (
+              <S.Favourites
+                active={favourites.includes(data.id)}
+                onClick={onHeartClick}
+              />
+            )} */}
+
+            {/* <S.Sword active={clickedSword} onClick={onSwordClick} />
+          </S.IconDiv> */}
           <S.StyleLink to={`/pokemons/${data.name}`}>
             <S.DivImg>
               <S.Img src={data.sprites.other.dream_world.front_default} />

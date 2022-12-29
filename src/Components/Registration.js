@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import * as yup from 'yup'
 import { useState } from 'react'
 import axios from 'axios'
+import Button from '@mui/material/Button'
 import {
   Container,
   Card,
@@ -34,7 +35,6 @@ const basicSchema = yup.object().shape({
 })
 
 export const Registration = ({ className }) => {
-  
   const [succes, setSucces] = useState(false)
   const {
     values,
@@ -66,10 +66,10 @@ export const Registration = ({ className }) => {
   return (
     <Container className={className}>
       <Card>
-        <h1>Registration</h1>
+        <h1>Rejestracja</h1>
         <form onSubmit={handleSubmit}>
           <InputDiv>
-            <label htmlFor='firstName'>First Name</label>
+            <label htmlFor='firstName'>Imię</label>
             <InputStyle
               borderStyled={errors.name && touched.name ? 'red' : 'black'}
               id='firstName'
@@ -87,7 +87,7 @@ export const Registration = ({ className }) => {
             )}
           </InputDiv>
           <InputDiv>
-            <label htmlFor='lastName'>Last Name</label>
+            <label htmlFor='lastName'>Nazwisko</label>
             <InputStyle
               borderStyled={
                 errors.lastName && touched.lastName ? 'red' : 'black'
@@ -119,7 +119,7 @@ export const Registration = ({ className }) => {
             )}
           </InputDiv>
           <InputDiv>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password'>Hasło</label>
             <InputStyle
               borderStyled={
                 errors.password && touched.password ? 'red' : 'black'
@@ -139,7 +139,7 @@ export const Registration = ({ className }) => {
             )}
           </InputDiv>
           <InputDiv>
-            <label htmlFor='confirmPassword'>Confirm password</label>
+            <label htmlFor='confirmPassword'>Potwierdź hasło</label>
             <InputStyle
               borderStyled={
                 errors.confirmPassword && touched.confirmPassword
@@ -158,9 +158,16 @@ export const Registration = ({ className }) => {
             )}
           </InputDiv>
           <InputDiv>
-            <ButtonStyle type='submit'>Register</ButtonStyle>
+            <Button
+              type='submit'
+              variant='contained'
+              size='medium'
+              style={{ backgroundColor: '#034f84' }}
+            >
+              Zarejestruj się
+            </Button>
           </InputDiv>
-          {succes ? <p>You are registered successfully!</p> : ''}
+          {succes ? <p>Zalogowałes się poprawnie</p> : ''}
         </form>
       </Card>
     </Container>
