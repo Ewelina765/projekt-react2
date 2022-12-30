@@ -79,19 +79,6 @@ const PokemonBattle = ({ id, battle, setBattle }) => {
     fetchPoke2()
   }, [])
 
-  const onSwordClick = () => {
-    setClickedSword((clickedIcon) => !clickedIcon)
-    setBattle((prev) =>
-      prev.includes(pokemon1.id) ? battle.filter((x) => x !== pokemon1.id) : ''
-    )
-  }
-
-  const onSwordClick2 = () => {
-    setClickedSword2((clickedIcon2) => !clickedIcon2)
-    setBattle((prev) =>
-      prev.includes(pokemon2.id) ? battle.filter((x) => x !== pokemon2.id) : ''
-    )
-  }
 
   const pokemonPower1 = pokemon1.base_experience * pokemon1.weight
   const pokemonPower2 = pokemon2.base_experience * pokemon2.weight

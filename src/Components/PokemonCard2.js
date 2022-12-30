@@ -102,18 +102,12 @@ const PokemonCard2 = ({
     <S.Li>
       <S.Container>
         <Card>
-          {/* <S.IconDiv>
-            {favourites.length === 0 ? (
+          <S.IconDiv>
+            {favourites && (
               <S.Favourites active={clickedHeart} onClick={onHeartClick} />
-            ) : (
-              <S.Favourites
-                active={favourites.includes(data.id)}
-                onClick={onHeartClick}
-              />
-            )} */}
-
-            {/* <S.Sword active={clickedSword} onClick={onSwordClick} />
-          </S.IconDiv> */}
+            )}
+            {battle && <S.Sword active={clickedSword} onClick={onSwordClick} />}
+          </S.IconDiv>
           <S.StyleLink to={`/pokemons/${data.name}`}>
             <S.DivImg>
               <S.Img src={data.sprites.other.dream_world.front_default} />

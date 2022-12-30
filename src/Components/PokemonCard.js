@@ -6,7 +6,7 @@ import useFetch from '../hooks/useFetch'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ColorizeIcon from '@mui/icons-material/Colorize'
 import IconButton from '@mui/material/IconButton'
-import BrushIcon from '@mui/icons-material/Brush';
+import BrushIcon from '@mui/icons-material/Brush'
 
 const S = {
   Container: styled.div`
@@ -56,10 +56,9 @@ const S = {
     color: ${({ active }) => (active ? 'black' : 'grey')};
     cursor: pointer;
     transform: rotate(90deg);
-   
   `,
-  Edit:styled(BrushIcon)`
- color: ${({ active }) => (active ? 'blue' : 'grey')};
+  Edit: styled(BrushIcon)`
+    color: ${({ active }) => (active ? 'blue' : 'grey')};
     cursor: pointer;
     transform: rotate(90deg);
   `,
@@ -67,9 +66,9 @@ const S = {
     text-decoration: none;
     color: #034f84;
   `,
-   Font:styled.div`
-   font-weight: bolder;
-   `
+  Font: styled.div`
+    font-weight: bolder;
+  `,
 }
 
 const PokemonCard = ({
@@ -80,7 +79,7 @@ const PokemonCard = ({
   battle,
   setBattle,
   edit,
-  setEdit
+  setEdit,
 }) => {
   const [clickedHeart, setClickedHeart] = useState(false)
   const [clickedSword, setClickedSword] = useState(false)
@@ -120,13 +119,13 @@ const PokemonCard = ({
         : [...prev, data.id]
     )
   }
-console.log(edit)
+  console.log(edit)
 
   if (battle.length > 2) {
     battle.splice(2)
   }
 
-  if(edit.length>1) {
+  if (edit.length > 1) {
     edit.splice(1)
   }
 
@@ -137,13 +136,19 @@ console.log(edit)
         <Card>
           <S.IconDiv>
             <IconButton>
-              <S.Favourites active={favourites.includes(data.id)} onClick={onHeartClick} />
+              <S.Favourites
+                active={favourites.includes(data.id)}
+                onClick={onHeartClick}
+              />
             </IconButton>
             <IconButton disabled={battle.length > 1}>
-              <S.Sword active={battle.includes(data.id)} onClick={onSwordClick} />
+              <S.Sword
+                active={battle.includes(data.id)}
+                onClick={onSwordClick}
+              />
             </IconButton>
             <IconButton disabled={edit.length > 0}>
-             <S.Edit active={edit.includes(data.id)} onClick={onEditClick}  />
+              <S.Edit active={edit.includes(data.id)} onClick={onEditClick} />
             </IconButton>
           </S.IconDiv>
           <S.StyleLink to={`/pokemons/${name}`}>

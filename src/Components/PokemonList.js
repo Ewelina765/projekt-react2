@@ -28,11 +28,20 @@ const S = {
   `,
 }
 
-const PokemonList = ({ pokemons, inputText, favourites, setFavourites, battle, setBattle, edit, setEdit}) => {
+const PokemonList = ({
+  pokemons,
+  inputText,
+  favourites,
+  setFavourites,
+  battle,
+  setBattle,
+  edit,
+  setEdit,
+}) => {
   const [url, setUrl] = useState(
     'https://pokeapi.co/api/v2/pokemon?limit=15&offset=0'
   )
-  
+
   const { data, isLoading, error, nextURL, prevURL } = useFetch(url)
 
   const nextPage = () => {
@@ -41,7 +50,7 @@ const PokemonList = ({ pokemons, inputText, favourites, setFavourites, battle, s
   const prevPage = () => {
     setUrl(prevURL)
   }
- 
+
   return (
     <S.Container>
       {isLoading && <h2>Loading...</h2>}
@@ -75,7 +84,6 @@ const PokemonList = ({ pokemons, inputText, favourites, setFavourites, battle, s
             <ul>
               {data.results.map((pokemon) => (
                 <PokemonCard
-
                   id={pokemon.id}
                   key={pokemon.id}
                   name={pokemon.name}
@@ -85,7 +93,7 @@ const PokemonList = ({ pokemons, inputText, favourites, setFavourites, battle, s
                   setFavourites={setFavourites}
                   battle={battle}
                   setBattle={setBattle}
-                  edit={edit} 
+                  edit={edit}
                   setEdit={setEdit}
                 ></PokemonCard>
               ))}

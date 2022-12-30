@@ -11,11 +11,9 @@ const S = {
     justify-content: center;
   `,
   Card: styled.div`
-  display:flex;
-  flex-direction: column;
-  justify-content:center;
- 
- 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   `,
 }
 
@@ -29,53 +27,63 @@ const Edition = ({ edit, setEdit }) => {
   const [clickedEdit, setClickedEdit] = useState(true)
 
   useEffect(() => {
-    const pokeCharacteristic = async () => {
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${edit}`
-      )
-      setData(response.data)
-      setNameP(response.data.name)
-      setHeightP(response.data.height)
-      setWeightP(response.data.weight)
-      setBaseExp(response.data.base_experience)
-      setAbility(response.data.abilities[0].ability.name)
+    if (edit) {
+      const pokeCharacteristic = async () => {
+        const response = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${edit}`
+        )
+        setData(response.data)
+        setNameP(response.data.name)
+        setHeightP(response.data.height)
+        setWeightP(response.data.weight)
+        setBaseExp(response.data.base_experience)
+        setAbility(response.data.abilities[0].ability.name)
+      }
+      pokeCharacteristic()
+    } else {
+      return <p>Brak kart do edycji</p>
     }
-    pokeCharacteristic()
   }, [])
 
   const onEditClick = () => {
     setEdit([])
   }
 
-if(!data) return null
+  if (!data) return null
   return (
     <S.Container>
-      <div>
-        <PokemonEdit
-          edit={edit}
-          setEdit={setEdit}
-          data={data}
-          nameP={nameP}
-          heightP={heightP}
-          baseExp={baseExp}
-          weightP={weightP}
-          ability={ability}
-          setClickedEdit={setClickedEdit}
-        />
-      </div>
-      <S.Card>
-        <PokemonEditForm
-          edit={edit}
-          setEdit={setEdit}
-          setNameP={setNameP}
-          setHeightP={setHeightP}
-          setWeightP={setWeightP}
-          setBaseExp={setBaseExp}
-          setAbility={setAbility}
-        />
-      </S.Card>
-      {edit.length === 0 && <p>Brak kart do edycji</p>}
+      {edit.length > 0 && (
+        <div>
+          <PokemonEdit
+            edit={edit}
+            setEdit={setEdit}
+            data={data}
+            nameP={nameP}
+            heightP={heightP}
+            baseExp={baseExp}
+            weightP={weightP}
+            ability={ability}
+            setClickedEdit={setClickedEdit}
+          />
+        </div>
+      )}
+      {edit.length > 0 && (
+        <S.Card>
+          <PokemonEditForm
+            edit={edit}
+            setEdit={setEdit}
+            setNameP={setNameP}
+            setHeightP={setHeightP}
+            setWeightP={setWeightP}
+            setBaseExp={setBaseExp}
+            setAbility={setAbility}
+          />
+        </S.Card>
+      )}
+
+  <div>
       <button onClick={onEditClick}>Usuń</button>
+      </div>
     </S.Container>
   )
 }
