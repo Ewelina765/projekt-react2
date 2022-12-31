@@ -1,6 +1,5 @@
 import React from 'react'
 const LogOut = () => {
-  
-  return <div> You have successfully been logged out </div>
+  return <div> Poprawnie się wylogowałaś/eś </div>
 }
 export default LogOut

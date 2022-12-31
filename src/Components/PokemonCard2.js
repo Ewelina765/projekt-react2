@@ -1,11 +1,10 @@
 import useFetch from '../hooks/useFetch'
 import styled from 'styled-components'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Card from '../UI/Card'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ColorizeIcon from '@mui/icons-material/Colorize'
-import Arena from '../Components/Arena'
 
 const S = {
   Container: styled.div`
@@ -38,7 +37,6 @@ const S = {
   `,
   Li: styled.li`
     display: inline-block;
-    /* padding: 10px; */
   `,
   Favourites: styled(FavoriteIcon)`
     color: ${({ active }) => (active ? 'red' : 'grey')};
@@ -64,24 +62,10 @@ const S = {
   `,
 }
 
-const PokemonCard2 = ({
-  setFavourites,
-  favourites,
-  id,
-  battle,
-  setBattle,
-  edit,
-  setEdit,
-  heightP,
-  setHeightP,
-}) => {
-  const [clickedHeart, setClickedHeart] = useState(true)
-  const [clickedSword, setClickedSword] = useState(true)
-
+const PokemonCard2 = ({ setFavourites, favourites, id, battle, setBattle }) => {
   const { data } = useFetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
 
   const onHeartClick = () => {
-    setClickedHeart((clickedHeart) => !clickedHeart)
     setFavourites((prev) =>
       prev.includes(data.id)
         ? favourites.filter((x) => x !== data.id)
@@ -89,7 +73,6 @@ const PokemonCard2 = ({
     )
   }
   const onSwordClick = () => {
-    setClickedSword((clickedIcon) => !clickedIcon)
     setBattle((prev) =>
       prev.includes(data.id)
         ? battle.filter((x) => x !== data.id)
@@ -104,9 +87,17 @@ const PokemonCard2 = ({
         <Card>
           <S.IconDiv>
             {favourites && (
-              <S.Favourites active={clickedHeart} onClick={onHeartClick} />
+              <S.Favourites
+                active={favourites.includes(data.id)}
+                onClick={onHeartClick}
+              />
             )}
-            {battle && <S.Sword active={clickedSword} onClick={onSwordClick} />}
+            {battle && (
+              <S.Sword
+                active={battle.includes(data.id)}
+                onClick={onSwordClick}
+              />
+            )}
           </S.IconDiv>
           <S.StyleLink to={`/pokemons/${data.name}`}>
             <S.DivImg>

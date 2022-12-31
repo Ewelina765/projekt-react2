@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Card from '../UI/Card'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import ColorizeIcon from '@mui/icons-material/Colorize'
-import IconButton from '@mui/material/IconButton'
-import BrushIcon from '@mui/icons-material/Brush'
 
 const S = {
   Container: styled.div`
@@ -40,28 +36,28 @@ const S = {
     display: inline-block;
     padding: 10px;
   `,
-  
+
   DivImg: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   `,
-  
+
   StyleLink: styled(Link)`
     text-decoration: none;
     color: #034f84;
   `,
-  
 }
 
-
-
-const PokemonEdit = ({ edit, setEdit, data, nameP, heightP, baseExp, weightP, ability, setClickedEdit}) => {
- 
-  
- 
-
+const PokemonEdit = ({
+  data,
+  nameP,
+  heightP,
+  baseExp,
+  weightP,
+  ability
+}) => {
   if (!data) return null
   return (
     <div>

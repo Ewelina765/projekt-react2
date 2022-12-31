@@ -12,7 +12,6 @@ import LogOut from './Components/LogOut'
 import Edition from './Components/Edition'
 import Favourites from './Components/Favourites'
 import Arena from './Components/Arena'
-import useFetch from './hooks/useFetch'
 import GlobalStyle from './UI/createGlobalStyle'
 
 const S = {
@@ -24,9 +23,9 @@ const S = {
     }
   `,
   Main: styled.main`
- width: 100vw;
- height: 100vw;
- background-color: #d5f4e6;
+    width: 100vw;
+    height: 100vw;
+    background-color: #d5f4e6;
   `,
 }
 
@@ -35,7 +34,6 @@ const App = () => {
   const [favourites, setFavourites] = useState([])
   const [battle, setBattle] = useState([])
   const [edit, setEdit] = useState([])
-  const [state, setState] = useState([])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -46,12 +44,9 @@ const App = () => {
     fetchUser()
   }, [users.length])
 
-  const { data } = useFetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-
- 
   return (
     <LogInProvider>
-      <GlobalStyle/>
+      <GlobalStyle />
       <nav>
         <Navigation />
       </nav>
@@ -61,7 +56,14 @@ const App = () => {
           <Route
             index
             element={
-              <Home favourites={favourites} setFavourites={setFavourites} battle={battle} setBattle={setBattle} edit={edit} setEdit={setEdit}/>
+              <Home
+                favourites={favourites}
+                setFavourites={setFavourites}
+                battle={battle}
+                setBattle={setBattle}
+                edit={edit}
+                setEdit={setEdit}
+              />
             }
           />
           <Route path='/registration' element={<S.RegistrationWrapper />} />
@@ -69,8 +71,14 @@ const App = () => {
           <Route path='/sign' element={<Sign users={users} />} />
           <Route path='*' element={<Error />} />
           <Route path='/pokemons/:pokemonId' element={<PokemonDetail />} />
-          <Route path='/edition' element={<Edition edit={edit} setEdit={setEdit}/>} />
-          <Route path='/arena' element={<Arena battle={battle} setBattle={setBattle}  />} />
+          <Route
+            path='/edition'
+            element={<Edition edit={edit} setEdit={setEdit} />}
+          />
+          <Route
+            path='/arena'
+            element={<Arena battle={battle} setBattle={setBattle} />}
+          />
           <Route
             path='/favourites'
             element={

@@ -36,20 +36,16 @@ const Edition = ({ edit, setEdit }) => {
         setNameP(response.data.name)
         setHeightP(response.data.height)
         setWeightP(response.data.weight)
-        setBaseExp(response.data.base_experience)
         setAbility(response.data.abilities[0].ability.name)
+        setBaseExp(response.data.base_experience)
       }
       pokeCharacteristic()
     } else {
-      return <p>Brak kart do edycji</p>
+      return null
     }
   }, [])
 
-  const onEditClick = () => {
-    setEdit([])
-  }
-
-  if (!data) return null
+  if (!data && !edit) return null
   return (
     <S.Container>
       {edit.length > 0 && (
@@ -80,10 +76,6 @@ const Edition = ({ edit, setEdit }) => {
           />
         </S.Card>
       )}
-
-  <div>
-      <button onClick={onEditClick}>Usuń</button>
-      </div>
     </S.Container>
   )
 }

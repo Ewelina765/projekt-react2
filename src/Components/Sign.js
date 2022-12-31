@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import * as yup from 'yup'
 import { LogInContext } from '../Contexts/LogContext'
 import { useContext } from 'react'
@@ -9,7 +9,6 @@ import {
   InputStyle,
   InputDiv,
   SignContainer,
-  ButtonStyle,
   ErrorStyled,
 } from './RegistrationStyled'
 import { useNavigate } from 'react-router-dom'
@@ -29,7 +28,6 @@ export const Sign = ({ users }) => {
   const navigate = useNavigate()
   const { setIsLogIn } = useContext(LogInContext)
 
-  console.log(users, 'users')
   const {
     values,
     errors,
@@ -49,8 +47,6 @@ export const Sign = ({ users }) => {
   })
 
   const checkUser = () => {
-    console.log('userssing', users)
-    console.log('values', values)
     const userCheck = users.find(
       (user) => user.email === values.email && user.password === values.password
     )

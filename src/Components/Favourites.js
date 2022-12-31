@@ -13,7 +13,6 @@ const Favourites = ({ favourites, setFavourites }) => {
           />
         )
       })}
-      <div>{favourites.length===0 && <p>Nie masz ulubionych kart</p>}</div>
     </>
   )
 }

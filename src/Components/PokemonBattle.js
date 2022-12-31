@@ -39,23 +39,17 @@ const S = {
     width: 325px;
   `,
   Buttons: styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap:10px;
-  `
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  `,
 }
 const PokemonBattle = ({ id, battle, setBattle }) => {
-  const [clickedSword, setClickedSword] = useState(true)
-  const [clickedSword2, setClickedSword2] = useState(true)
   const [pokemon1, setPokemon1] = useState('')
   const [pokemon2, setPokemon2] = useState('')
   const [imgOpacity, setImgOpacity] = useState('1')
   const [imgOpacity2, setImgOpacity2] = useState('1')
-  // const [looser, setLooser] = useState('')
-
-  // const { data } = useFetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-  // console.log('data', data)
 
   useEffect(() => {
     const fetchPoke1 = async () => {
@@ -63,7 +57,6 @@ const PokemonBattle = ({ id, battle, setBattle }) => {
         `https://pokeapi.co/api/v2/pokemon/${battle[0]}`
       )
       setPokemon1(response.data)
-      console.log('pokemon1', pokemon1)
     }
     fetchPoke1()
   }, [])
@@ -79,12 +72,8 @@ const PokemonBattle = ({ id, battle, setBattle }) => {
     fetchPoke2()
   }, [])
 
-
   const pokemonPower1 = pokemon1.base_experience * pokemon1.weight
   const pokemonPower2 = pokemon2.base_experience * pokemon2.weight
-
-  console.log('1', pokemonPower1)
-  console.log('2', pokemonPower2)
 
   const battleClick = () => {
     setImgOpacity(pokemonPower1 > pokemonPower2 ? '1' : '0.5')

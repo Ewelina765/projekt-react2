@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Card from '../UI/Card'
 import useFetch from '../hooks/useFetch'
@@ -81,22 +81,9 @@ const PokemonCard = ({
   edit,
   setEdit,
 }) => {
-  const [clickedHeart, setClickedHeart] = useState(false)
-  const [clickedSword, setClickedSword] = useState(false)
-  const [clickedEdit, setClickedEdit] = useState(false)
-  const [inFav, setInFav] = useState(false)
-  const [isDisabled, setIsDisabled] = useState(false)
-
   const { data } = useFetch(url)
 
-  // useEffect(() => {
-  //   if (favourites.length > 0) {
-  //     setInFav(favourites.includes(data.id))
-  //   }
-  // }, [favourites.length])
-
   const onHeartClick = () => {
-    setClickedHeart((clickedHeart) => !clickedHeart)
     setFavourites((prev) =>
       prev.includes(data.id)
         ? favourites.filter((x) => x !== data.id)
@@ -104,7 +91,6 @@ const PokemonCard = ({
     )
   }
   const onSwordClick = () => {
-    setClickedSword((clickedIcon) => !clickedIcon)
     setBattle((prev) =>
       prev.includes(data.id)
         ? battle.filter((x) => x !== data.id)
@@ -112,14 +98,12 @@ const PokemonCard = ({
     )
   }
   const onEditClick = () => {
-    setClickedEdit((clickedEdit) => !clickedEdit)
     setEdit((prev) =>
       prev.includes(data.id)
         ? edit.filter((x) => x !== data.id)
         : [...prev, data.id]
     )
   }
-  console.log(edit)
 
   if (battle.length > 2) {
     battle.splice(2)

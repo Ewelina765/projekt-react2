@@ -39,10 +39,10 @@ const S = {
   `,
 }
 const Navigation = () => {
-  const {isLogIn, setIsLogIn} = useContext(LogInContext)
+  const { isLogIn, setIsLogIn } = useContext(LogInContext)
 
   const logOut = () => {
-setIsLogIn(false)
+    setIsLogIn(false)
   }
   return (
     <S.Container>
@@ -51,15 +51,19 @@ setIsLogIn(false)
       </div>
       <S.Nav>
         <S.NavBasic>
-          <S.StyleLink to='favourites' >Ulubione</S.StyleLink>
+          <S.StyleLink to='favourites'>Ulubione</S.StyleLink>
           <S.StyleLink to='arena'>Arena</S.StyleLink>
           <S.StyleLink to='sign'>Logowanie</S.StyleLink>
           <S.StyleLink to='registration'>Rejestracja</S.StyleLink>
         </S.NavBasic>
-       {isLogIn &&(<S.NavExtend>
-          <S.StyleLink to='edition'>Edycja</S.StyleLink>
-          <S.StyleLink to='logout' onClick={logOut}>Wyloguj</S.StyleLink>
-        </S.NavExtend>)} 
+        {isLogIn && (
+          <S.NavExtend>
+            <S.StyleLink to='edition'>Edycja</S.StyleLink>
+            <S.StyleLink to='logout' onClick={logOut}>
+              Wyloguj
+            </S.StyleLink>
+          </S.NavExtend>
+        )}
       </S.Nav>
     </S.Container>
   )
