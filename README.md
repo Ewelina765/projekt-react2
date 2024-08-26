@@ -1,3 +1,16 @@
+# Pokemons
+
+Pokemow is a web application that leverages the Pokémon API to display a list of Pokémon with pagination, images, and a search feature. This project allows users to browse through Pokémon data efficiently and interactively.
+Login and registration have been added, along with the ability to add Pokémon to your favorites list.
+
+## Project Description
+
+Pokemow is designed to provide a seamless experience for browsing Pokémon data. The application retrieves a list of Pokémon from the Pokémon API, supports pagination to navigate through large datasets, and includes a search feature to filter Pokémon by name. Each Pokémon entry displays relevant details, including images.
+
+## Technologies
+
+React, JavaSript
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
